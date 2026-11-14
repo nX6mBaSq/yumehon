@@ -1,4 +1,5 @@
 'use strict';
+const shopName = '不思議な夢の本屋さん';
 const genres = ['怖い夢', '幸せな夢', '奇妙な夢'];
 const initial = () => ({
   signedIn: false, purchased: ['3'], payments: [{id:'3', status:'success'}], reports: [],
@@ -49,7 +50,7 @@ function home() {
     <section class="shop-entrance" aria-labelledby="shop-title">
       <div class="shop-moon" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
       <p class="shop-kicker">本当に見た夢だけを集めた本屋</p>
-      <h1 id="shop-title">夢の本屋さん</h1>
+      <h1 id="shop-title">${shopName}</h1>
       <p class="shop-lead">あなたが眠っている間に見た夢が、<br>誰かの読みたい物語になる。</p>
       ${btn('本棚をのぞく', '/dreams', null, true)}
     </section>
@@ -76,7 +77,7 @@ function home() {
       <p>今夜も、どうかたくさん眠ってください。</p>
       <p>どんなに奇妙な夢でも、途中で終わってしまった夢でも構いません。<br>あなたが眠りの中で出会う世界を、楽しみに待っている読者がいます。</p>
       <p>眠ることも、あなたのお仕事なのですから。<br>おやすみなさい。<span aria-hidden="true"> ☾</span></p>
-      <p class="shop-signature">― 夢の本屋さん</p>
+      <p class="shop-signature">― ${shopName}</p>
       ${btn('見た夢を本棚へ', '/account/dreams/new', null, true)}
       <p class="shop-note">投稿は無料です。 ${link('報酬の仕組み', '/royalties')}</p>
     </section>
@@ -99,7 +100,7 @@ function screen(path, query) {
   if (path.startsWith('/account') && !state.signedIn) {
     return ['ログインが必要です', actions(btn('ログイン', '/login', {next:path}, true), btn('会員登録', '/signup', {next:path}))];
   }
-  if (path === '/') return ['夢の本屋さん', home()];
+  if (path === '/') return [shopName, home()];
   if (path === '/posting-rules') return ['投稿ルール',
     block('掲載できる夢', '<p>本当に眠っている間に見た夢だけを掲載します。途中で終わった夢も、そのまま投稿できます。</p>') +
     block('当店に並べられない夢', '<p>以下の内容を含む投稿は禁止です。</p>' + postingRulesList) +
@@ -199,7 +200,7 @@ function render(focus=true) {
   const [title,body] = screen(path,query);
   main.classList.toggle('shop-home', path === '/');
   main.innerHTML=path === '/' ? body : '<h1>'+esc(title)+'</h1>'+body;
-  document.title=path === '/' ? '夢の本屋さん β版' : title+' | 夢の本屋さん β版';
+  document.title=path === '/' ? shopName+' β版' : title+' | '+shopName+' β版';
   const tab = path.startsWith('/dreams') || path.startsWith('/checkout') ? '/dreams' : path === '/account/dreams/new' ? path : path.startsWith('/account') ? '/account' : path;
   document.querySelectorAll('.tabs a').forEach(a=>{
     if (a.hash===url(tab)) a.setAttribute('aria-current','page');
