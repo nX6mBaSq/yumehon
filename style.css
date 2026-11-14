@@ -12,8 +12,7 @@ h2{font-size:1.2rem}h3{font-size:1.05rem}
 p{margin:.5rem 0 1rem}
 a{color:inherit;text-underline-offset:.2em}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #555;outline-offset:3px}
-.card,.hero{border:1px solid var(--line);background:var(--paper);padding:1rem;border-radius:8px;margin-bottom:1rem}
-.hero{padding:clamp(1rem,5vw,2.5rem);background:var(--fill)}
+.card{border:1px solid var(--line);background:var(--paper);padding:1rem;border-radius:8px;margin-bottom:1rem}
 .grid{display:grid;gap:.75rem}.grid .card{margin:0}
 .stack{display:grid;gap:.65rem}.stack>*{margin:0}
 .actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
@@ -36,3 +35,49 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
 .skip{position:absolute;top:-5rem;background:white;padding:.5rem}.skip:focus{top:.25rem}
 .read{white-space:pre-wrap}
 @media(min-width:42rem){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{padding-inline:1.5rem}}
+
+/* Bookshop entrance and shelf */
+.shop-home{width:min(100%,66rem);color:#2b2541;--serif:"Yu Mincho","Hiragino Mincho ProN",serif}
+body:has(.shop-home){background:#fbf8f1}
+body:has(.shop-home) header,body:has(.shop-home) .tabs{background:#fffdf8;border-color:#ded6c9}
+body:has(.shop-home) .brand{font-family:"Yu Mincho",serif}
+body:has(.shop-home) .tabs a[aria-current]{background:#efe8f3;border-color:#55436d}
+.shop-home h1,.shop-home h2,.shop-home h3,.shop-lead{font-family:var(--serif)}
+.shop-home h2{font-size:clamp(1.3rem,4vw,2rem);line-height:1.55}
+.shop-entrance{position:relative;isolation:isolate;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse at 75% 5%,#47365d,transparent 60%),linear-gradient(145deg,#171426,#29213f);
+  color:#fff7e7;border-radius:1.5rem 1.5rem .5rem .5rem;padding:clamp(2.2rem,7vw,5rem) 1rem}
+.shop-entrance h1{font-size:clamp(2.2rem,8vw,4.6rem);font-weight:600;letter-spacing:.08em;margin:.5rem 0 1rem}
+.shop-kicker{color:#64547a;font-size:.85rem;font-weight:700;letter-spacing:.13em;margin:0 0 .35rem}
+.shop-entrance .shop-kicker{color:#eed2a8}
+.shop-lead{font-size:clamp(1rem,3vw,1.4rem);line-height:1.9;margin-bottom:1.6rem;text-wrap:balance}
+.shop-moon{position:relative;width:3.4rem;height:3.4rem;margin:0 auto 1.3rem;border-radius:50%;box-shadow:inset -.83rem -.36rem 0 #f5d9a7;color:#eed2a8;transform:rotate(-15deg)}
+.shop-moon span{position:absolute;font-size:.82rem;transform:rotate(15deg)}
+.shop-moon span:nth-child(1){top:-.6rem;left:-1.4rem}
+.shop-moon span:nth-child(2){top:.4rem;right:-1.25rem}
+.shop-moon span:nth-child(3){bottom:.05rem;left:-2.1rem;font-size:.6rem}
+.shop-home .btn{border-radius:2rem;border-color:#59486f;background:transparent;color:#46345c;padding-inline:1.3rem}
+.shop-home .primary{background:#49385f;color:#fff9ec}
+.shop-entrance .primary{background:#f5dbaf;border-color:#f5dbaf;color:#2b2541}
+.shop-entrance a:focus-visible{outline-color:#fff7e7}
+.shop-letter{text-align:center;padding:clamp(2rem,6vw,4.3rem) .5rem;line-height:1.95}
+.shop-letter p{text-wrap:pretty}
+.shop-shelf{padding:clamp(1rem,4vw,2.5rem);background:#f0e8dd;border:1px solid #e5d9ca;border-radius:.5rem;text-align:center}
+.shop-note,.shop-account{color:#585062;font-size:.9rem}
+.shop-books{display:grid;gap:.85rem;list-style:none;padding:0;margin:1.3rem 0}
+.shop-book{display:flex;flex-direction:column;height:100%;border:1px solid #ded1c5;border-left:5px solid #725479;
+  border-radius:.3rem .7rem .7rem .3rem;padding:1rem;background:#fffdf9;text-align:left;text-decoration:none}
+.shop-books li:nth-child(2) .shop-book{border-left-color:#a26942}
+.shop-books li:nth-child(3) .shop-book{border-left-color:#527183}
+.shop-book:hover{background:#fffbef}
+.shop-book h3{font-size:1.22rem;margin:.4rem 0 .2rem;line-height:1.5}
+.shop-book p{font-size:.93rem;margin:.3rem 0 1rem}
+.shop-genre,.shop-read{font-size:.84rem;color:#55436d}
+.shop-read{margin-top:auto;text-decoration:underline;text-underline-offset:.2em}
+.shop-signature{font-family:var(--serif)}
+.shop-rules{max-width:42rem;margin-inline:auto;border-block:1px solid #ded6c9;padding-inline:.65rem}
+.shop-rules summary{cursor:pointer;font-weight:700;padding:.75rem 0}
+.shop-rules summary:focus-visible{outline:3px solid #555;outline-offset:3px}
+.shop-rules li{margin-block:.25rem}
+.shop-account{text-align:center;margin:1.2rem 0 0}
+@media(min-width:44rem){.shop-books{grid-template-columns:repeat(3,minmax(0,1fr))}}

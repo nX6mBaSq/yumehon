@@ -28,12 +28,67 @@ const option = (label, selected) => '<option' + (label === selected ? ' selected
 const submit = label => '<button class="primary">' + label + '</button>';
 const dreamPath = d => '/dreams/' + d.id;
 const ownPath = d => '/account/dreams/' + d.id;
+const postingRules = [
+  '性的な描写や性的行為を含む夢',
+  'わいせつ・露骨な表現を含む夢',
+  '性的な興奮を目的とした内容',
+  '実在する人物への誹謗中傷や、本人・第三者の個人情報の公開',
+  '犯罪の予告、脅迫、違法行為を助長する内容',
+  '作り話、AIによって創作された夢、結末の付け足し'
+];
+const postingRulesList = '<ul>' + postingRules.map(rule => '<li>' + esc(rule) + '</li>').join('') + '</ul>';
 const info = {
-  '/posting-rules': ['投稿ルール','実際に見た夢を投稿できます。創作、AIによる創作、結末の付け足し、本人や第三者を特定できる個人情報の掲載は禁止です。'],
   '/royalties': ['報酬の仕組み','投稿は無料です。販売1件150円のうち、投稿者90円・運営60円を想定しています（仮配分）。支払い条件はβ版の募集前に確定します。'],
   '/terms': ['利用規約','利用条件、投稿と購入、返金、通報・非公開化について掲載する予定です。'],
   '/privacy': ['プライバシーポリシー','会員情報・購入履歴・通報情報の取り扱いについて掲載する予定です。']
 };
+
+function home() {
+  const picks = state.dreams.filter(d => d.status === '公開中').slice(0, 3);
+  return `
+    <section class="shop-entrance" aria-labelledby="shop-title">
+      <div class="shop-moon" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
+      <p class="shop-kicker">本当に見た夢だけを集めた本屋</p>
+      <h1 id="shop-title">夢の本屋さん</h1>
+      <p class="shop-lead">あなたが眠っている間に見た夢が、<br>誰かの読みたい物語になる。</p>
+      ${btn('本棚をのぞく', '/dreams', null, true)}
+    </section>
+    <section class="shop-letter" aria-labelledby="shop-about">
+      <h2 id="shop-about">人が見た夢の話を聞くのは、好きですか？</h2>
+      <p>この世に存在しない景色。起こるはずのない出来事。<br>けれど、誰かが確かに眠りの中で見た世界。</p>
+      <p>怖い夢も、幸せな夢も、どこか不思議な夢ばかり。<br>ここは、そんな夢を集めた本屋です。</p>
+    </section>
+    <section class="shop-shelf" aria-labelledby="shop-picks">
+      <p class="shop-kicker">棚からひとつまみ</p>
+      <h2 id="shop-picks">本棚から、今夜の一冊</h2>
+      <p class="shop-note">あらすじは無料。全文は一話150円（仮価格）です。</p>
+      ${picks.length ? `<ul class="shop-books">${picks.map(d => `
+        <li><a class="shop-book" href="${esc(url(dreamPath(d)))}">
+          <span class="shop-genre">${esc(d.genre)}</span>
+          <h3>${esc(d.title)}</h3>
+          <p>${esc(d.summary)}</p>
+          <span class="shop-read">あらすじを読む <span aria-hidden="true">→</span></span>
+        </a></li>`).join('')}</ul>` : '<p>本棚には、まだ夢が並んでいません。</p>'}
+      ${btn('すべての夢を見る', '/dreams')}
+    </section>
+    <section class="shop-letter shop-author" aria-labelledby="shop-writers">
+      <h2 id="shop-writers">作家のみなさんへ</h2>
+      <p>今夜も、どうかたくさん眠ってください。</p>
+      <p>どんなに奇妙な夢でも、途中で終わってしまった夢でも構いません。<br>あなたが眠りの中で出会う世界を、楽しみに待っている読者がいます。</p>
+      <p>眠ることも、あなたのお仕事なのですから。<br>おやすみなさい。<span aria-hidden="true"> ☾</span></p>
+      <p class="shop-signature">― 夢の本屋さん</p>
+      ${btn('見た夢を本棚へ', '/account/dreams/new', null, true)}
+      <p class="shop-note">投稿は無料です。 ${link('報酬の仕組み', '/royalties')}</p>
+    </section>
+    <details class="shop-rules">
+      <summary>当店に並べられない夢</summary>
+      <p>安心して楽しめる、幻想的な物語の世界を大切にしています。以下の内容を含む投稿はできません。</p>
+      ${postingRulesList}
+      <p>${link('投稿ルールを読む', '/posting-rules')}</p>
+    </details>
+    ${state.signedIn ? '' : `<p class="shop-account">はじめての方は${link('会員登録', '/signup')}<span aria-hidden="true"> · </span>${link('ログイン', '/login')}</p>`}
+  `;
+}
 
 function route() {
   const [path, query] = (location.hash.slice(1) || '/').split('?');
@@ -44,13 +99,17 @@ function screen(path, query) {
   if (path.startsWith('/account') && !state.signedIn) {
     return ['ログインが必要です', actions(btn('ログイン', '/login', {next:path}, true), btn('会員登録', '/signup', {next:path}))];
   }
-  if (path === '/') return ['夢の本屋さん', '<section class="hero"><p>誰かが実際に見た夢を、読める本屋さん。</p><p>あらすじは無料。気になる夢の全文は1件150円（仮価格）で読めます。</p>' + actions(btn('本棚を見る','/dreams',null,true)) + '</section>' + block('夢を投稿する', '<p>実際に見た夢を無料で投稿できます。</p>' + actions(btn('投稿ルール','/posting-rules'),btn('報酬の仕組み','/royalties'),btn('投稿へ進む','/account/dreams/new',null,true))) + (state.signedIn ? '' : actions(btn('会員登録','/signup'),btn('ログイン','/login')))];
+  if (path === '/') return ['夢の本屋さん', home()];
+  if (path === '/posting-rules') return ['投稿ルール',
+    block('掲載できる夢', '<p>本当に眠っている間に見た夢だけを掲載します。途中で終わった夢も、そのまま投稿できます。</p>') +
+    block('当店に並べられない夢', '<p>以下の内容を含む投稿は禁止です。</p>' + postingRulesList) +
+    actions(btn('夢を投稿する', '/account/dreams/new', null, true))];
   if (path === '/dreams') {
     const genre = query.get('genre') || 'すべて';
     const dreams = state.dreams.filter(d => d.status === '公開中' && (genre === 'すべて' || d.genre === genre));
     return ['本棚','<form class="card" data-form="filter"><label>ジャンル<select name="genre">' + ['すべて', ...genres].map(g => option(g,genre)).join('') + '</select></label></form><div class="grid">' + (dreams.length ? dreams.map(d => '<article class="card"><span class="tag">'+esc(d.genre)+'</span><h2>'+link(d.title,dreamPath(d))+'</h2><p>'+esc(d.summary)+'</p>'+btn('あらすじを読む',dreamPath(d))+'</article>').join('') : '<p>このジャンルの作品はありません。</p>') + '</div>'];
   }
-  if (Object.hasOwn(info,path)) return [info[path][0],block(info[path][0] === '投稿ルール' ? '掲載できる夢' : 'ご案内','<p>'+info[path][1]+'</p>') + (['/posting-rules','/royalties'].includes(path) ? actions(btn('夢を投稿する','/account/dreams/new',null,true)) : back('利用案内','/help'))];
+  if (Object.hasOwn(info,path)) return [info[path][0],block('ご案内','<p>'+info[path][1]+'</p>') + (path === '/royalties' ? actions(btn('夢を投稿する','/account/dreams/new',null,true)) : back('利用案内','/help'))];
   if (path === '/help') return ['利用案内',block('読み方と投稿方法','<p>本棚であらすじを読み、全文は「夢の鍵」から購入します。購入した作品はマイページから再読できます。</p><p>投稿は運営による審査を経て公開されます。</p>')+block('問い合わせ・規約','<p>問い合わせ先は準備中です。</p>'+actions(btn('利用規約','/terms'),btn('プライバシーポリシー','/privacy')))];
   if (path === '/login' || path === '/signup') {
     const signup = path === '/signup';
@@ -138,8 +197,9 @@ function admin(path, query) {
 function render(focus=true) {
   const [path,query] = route();
   const [title,body] = screen(path,query);
-  main.innerHTML='<h1>'+esc(title)+'</h1>'+body;
-  document.title=title+' | 夢の本屋さん β版';
+  main.classList.toggle('shop-home', path === '/');
+  main.innerHTML=path === '/' ? body : '<h1>'+esc(title)+'</h1>'+body;
+  document.title=path === '/' ? '夢の本屋さん β版' : title+' | 夢の本屋さん β版';
   const tab = path.startsWith('/dreams') || path.startsWith('/checkout') ? '/dreams' : path === '/account/dreams/new' ? path : path.startsWith('/account') ? '/account' : path;
   document.querySelectorAll('.tabs a').forEach(a=>{
     if (a.hash===url(tab)) a.setAttribute('aria-current','page');
