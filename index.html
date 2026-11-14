@@ -2,16 +2,95 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>不思議な夢の本屋さん β版ワイヤーフレーム</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151425">
+<title>不思議な夢の本屋さん｜トップページ</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="pages.css">
 <script src="app.js" defer></script>
 </head>
-<body>
+<body id="top">
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="moon" viewBox="0 0 40 40"><path fill="currentColor" d="M25 4a16 16 0 1 0 11 25A16 16 0 0 1 25 4Z"/><path fill="currentColor" d="m31 6 1.4 4.6L37 12l-4.6 1.4L31 18l-1.4-4.6L25 12l4.6-1.4Z"/></symbol>
+  <symbol id="star" viewBox="0 0 32 32"><path fill="currentColor" d="M16 0q1 15 16 16-15 1-16 16Q15 17 0 16 15 15 16 0Z"/></symbol>
+  <symbol id="home" viewBox="0 0 24 24"><path d="m3 11 9-7 9 7M5 10v10h5v-5h4v5h5V10"/></symbol>
+  <symbol id="books" viewBox="0 0 24 24"><path d="M3 4h4v16H3zM7 4h4v16H7zM13 6l4-2 5 14-4 2z"/></symbol>
+  <symbol id="pen" viewBox="0 0 24 24"><path d="m4 20 2-6L17 3l4 4L10 18l-6 2ZM15 5l4 4"/></symbol>
+  <symbol id="person" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></symbol>
+</svg>
 <a class="skip" href="#main">本文へ</a>
-<header><div class="wrap bar"><a class="brand" href="#/">不思議な夢の本屋さん</a><span>β版ワイヤーフレーム</span></div></header>
-<main class="wrap" id="main" tabindex="-1"></main>
-<footer class="wrap"><a href="#/help">利用案内</a><a href="#/posting-rules">投稿ルール</a><a href="#/royalties">報酬の仕組み</a><a href="#/admin/review">運営画面デモ</a><button type="button" data-reset>デモをリセット</button></footer>
-<nav class="tabs" aria-label="メインメニュー"><div class="wrap"><a href="#/">トップ</a><a href="#/dreams">本棚</a><a href="#/account/dreams/new">夢を投稿</a><a href="#/account">マイページ</a></div></nav>
+<header class="header">
+  <div class="shell header-inner">
+    <a class="brand" href="#/"><svg aria-hidden="true"><use href="#moon"/></svg><span>不思議な夢の本屋さん</span></a>
+    <nav class="desktop-nav" aria-label="メインメニュー">
+      <a href="#/" aria-current="page">トップ</a><a href="#/dreams">本棚</a><a href="#/account/dreams/new">夢を投稿</a><a href="#/account">マイページ</a>
+    </nav>
+    <span class="beta">BETA</span>
+  </div>
+</header>
+<main id="main" tabindex="-1"></main>
+<template id="home-page">
+  <section class="hero" aria-labelledby="hero-title">
+    <img src="assets/bookshop.jpg" alt="" class="hero-image" fetchpriority="high">
+    <div class="hero-frame" aria-hidden="true"></div>
+    <div class="shell hero-inner">
+      <p class="eyebrow"><svg aria-hidden="true"><use href="#star"/></svg> THE DREAM BOOKSHOP</p>
+      <h1 id="hero-title">不思議な夢の<br>本屋さん</h1>
+      <p class="hero-copy">何度も繰り返し見る夢。<br>目が覚めても、忘れられない夢。</p>
+      <a class="button gold" href="#shelf">本棚をのぞく <span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+  <section class="intro paper" aria-labelledby="intro-title">
+    <div class="shell">
+      <div class="ornament" aria-hidden="true"><svg><use href="#moon"/></svg></div>
+      <p class="eyebrow">本屋からの手紙</p>
+      <h2 id="intro-title">あなたも、そんな夢を<br class="mobile-break">見たことはありませんか？</h2>
+      <p>どこの世界なのかもわからない場所。<br>人間ではない、見知らぬ存在との出会い。<br>現実では説明できない、不思議な出来事。</p>
+      <p>ここに集めたいのは、<br>誰かが本当に眠りの中で体験した、<br class="mobile-break">不思議な夢だけ。</p>
+    </div>
+  </section>
+  <section id="shelf" class="shelf" aria-labelledby="shelf-title">
+    <div class="shell">
+      <div class="shelf-heading">
+        <p class="eyebrow"><svg aria-hidden="true"><use href="#star"/></svg> 棚からひとつまみ</p>
+        <h2 id="shelf-title">本棚から、今夜の一冊</h2>
+        <p class="note">あらすじは無料。全文は一話150円（仮価格）です。</p>
+      </div>
+      <ul class="book-grid" data-home-books></ul>
+      <a class="button outline" href="#/dreams">すべての夢を見る <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+  <section class="write paper" aria-labelledby="write-title">
+    <div class="shell write-grid">
+      <div class="write-image"><img src="assets/reading-room.jpg" alt="月明かりの差す書斎に、本がふわりと浮かぶ" loading="lazy"></div>
+      <div class="write-copy">
+        <p class="eyebrow">あなたの夢も、一冊に</p>
+        <h2 id="write-title">心のどこかに残っている<br>不思議な夢</h2>
+        <p>誰かに話したかったけれど、うまく言葉にできなかった。<br class="desktop-break">話しても、信じてもらえない気がした。</p>
+        <p>あなたが見た、その夢の話を聞かせてください。</p>
+        <p>ここは、誰かが本当に見た<br class="mobile-break">不思議な夢だけが集まる場所。</p>
+        <a class="button ink" href="#/account/dreams/new">夢を投稿する <span aria-hidden="true">→</span></a>
+        <p class="note">投稿は無料です。 <a href="#/royalties">報酬の仕組み</a></p>
+      </div>
+    </div>
+    <div class="shell afterword">
+      <details><summary>当店に並べられない夢</summary><p>作り話やAIによって創作された夢、個人情報や性的な描写を含む夢などは掲載できません。</p><a href="#/posting-rules">投稿ルールを読む →</a></details>
+      <p class="note" data-guest>はじめての方は <a href="#/signup">会員登録</a> ・ <a href="#/login">ログイン</a></p>
+    </div>
+  </section>
+</template>
+<footer class="footer">
+  <div class="shell footer-inner">
+    <a class="brand" href="#/"><svg aria-hidden="true"><use href="#moon"/></svg><span>不思議な夢の本屋さん</span></a>
+    <div class="footer-links"><a href="#/help">利用案内</a><a href="#/posting-rules">投稿ルール</a><a href="#/royalties">報酬の仕組み</a></div>
+    <div class="footer-links"><a href="#/admin/review">運営画面デモ</a><button type="button" data-reset>デモをリセット</button></div>
+  </div>
+</footer>
+<nav class="mobile-nav" aria-label="メインメニュー">
+  <a href="#/" aria-current="page"><svg aria-hidden="true"><use href="#home"/></svg>トップ</a>
+  <a href="#/dreams"><svg aria-hidden="true"><use href="#books"/></svg>本棚</a>
+  <a href="#/account/dreams/new"><svg aria-hidden="true"><use href="#pen"/></svg>夢を投稿</a>
+  <a href="#/account"><svg aria-hidden="true"><use href="#person"/></svg>マイページ</a>
+</nav>
 </body>
 </html>

@@ -44,53 +44,54 @@ const info = {
   '/privacy': ['プライバシーポリシー','会員情報・購入履歴・通報情報の取り扱いについて掲載する予定です。']
 };
 
-function home() {
-  const picks = state.dreams.filter(d => d.status === '公開中').slice(0, 3);
-  return `
-    <section class="shop-entrance" aria-labelledby="shop-title">
-      <div class="shop-moon" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
-      <h1 id="shop-title">${shopName}</h1>
-      <p class="shop-lead">何度も繰り返し見る夢。<br>目が覚めても、忘れられない夢。</p>
-      ${btn('本棚をのぞく', '/dreams', null, true)}
-    </section>
-    <section class="shop-letter" aria-labelledby="shop-about">
-      <h2 id="shop-about">あなたも、そんな夢を見たことはありませんか？</h2>
-      <p>どこの世界なのかもわからない場所。<br>人間ではない、見知らぬ存在との出会い。<br>現実では説明できない、不思議な出来事。</p>
-      <p>ここに集めたいのは、<br>誰かが本当に眠りの中で体験した、不思議な夢だけ。</p>
-    </section>
-    <section class="shop-shelf" aria-labelledby="shop-picks">
-      <p class="shop-kicker">棚からひとつまみ</p>
-      <h2 id="shop-picks">本棚から、今夜の一冊</h2>
-      <p class="shop-note">あらすじは無料。全文は一話150円（仮価格）です。</p>
-      ${picks.length ? `<ul class="shop-books">${picks.map(d => `
-        <li><a class="shop-book" href="${esc(url(dreamPath(d)))}">
-          <span class="shop-genre">${esc(d.genre)}</span>
-          <h3>${esc(d.title)}</h3>
-          <p>${esc(d.summary)}</p>
-          <span class="shop-read">あらすじを読む <span aria-hidden="true">→</span></span>
-        </a></li>`).join('')}</ul>` : '<p>本棚には、まだ夢が並んでいません。</p>'}
-      ${btn('すべての夢を見る', '/dreams')}
-    </section>
-    <section class="shop-letter shop-author" aria-labelledby="shop-writers">
-      <h2 id="shop-writers">心のどこかに残っている不思議な夢</h2>
-      <p>誰かに話したかったけれど、<br>うまく言葉にできなかった。</p>
-      <p>話しても、信じてもらえない気がした。</p>
-      <p>あなたが見た、その夢の話を聞かせてください。</p>
-      <p>ここは、誰かが本当に見た不思議な夢だけが集まる場所。</p>
-      ${btn('夢を投稿する', '/account/dreams/new', null, true)}
-      <p class="shop-note">投稿は無料です。 ${link('報酬の仕組み', '/royalties')}</p>
-    </section>
-    <details class="shop-rules">
-      <summary>当店に並べられない夢</summary>
-      <p>安心して楽しめる、幻想的な物語の世界を大切にしています。以下の内容を含む投稿はできません。</p>
-      ${postingRulesList}
-      <p>${link('投稿ルールを読む', '/posting-rules')}</p>
-    </details>
-    ${state.signedIn ? '' : `<p class="shop-account">はじめての方は${link('会員登録', '/signup')}<span aria-hidden="true"> · </span>${link('ログイン', '/login')}</p>`}
-  `;
+const homeTemplate = document.querySelector('#home-page');
+const thumbnails = new Map([
+  ['1', 'midnight-library.jpg'],
+  ['2', 'cloud-breakfast.jpg'],
+  ['3', 'last-train.jpg']
+]);
+
+function thumbnail(d) {
+  const image = thumbnails.get(d.id);
+  if (!image) {
+    return '<span class="thumbnail thumbnail-placeholder" aria-hidden="true"><svg><use href="#moon"/></svg></span>';
+  }
+  return '<img class="thumbnail" src="assets/' + image + '" alt="" width="384" height="384">';
 }
 
+function bookCard(d) {
+  return `<li><a class="book" href="${esc(url(dreamPath(d)))}">
+    ${thumbnail(d)}
+    <div class="book-text">
+      <p class="genre">${esc(d.genre)}</p>
+      <h3>${esc(d.title)}</h3>
+      <p class="summary">${esc(d.summary)}</p>
+      <span class="book-read">あらすじを読む <span aria-hidden="true">→</span></span>
+    </div>
+  </a></li>`;
+}
+
+function accountDreamCard(d, body) {
+  return '<article class="card dream-preview">' + thumbnail(d) +
+    '<div><h2>' + esc(d.title) + '</h2>' + body + '</div></article>';
+}
+
+function home() {
+  main.replaceChildren(homeTemplate.content.cloneNode(true));
+  const books = main.querySelector('[data-home-books]');
+  const picks = state.dreams.filter(d => d.status === '公開中').slice(0, 3);
+  if (picks.length) {
+    books.innerHTML = picks.map(bookCard).join('');
+  } else {
+    const empty = document.createElement('p');
+    empty.className = 'shelf-empty';
+    empty.textContent = '本棚には、まだ夢が並んでいません。';
+    books.replaceWith(empty);
+  }
+  main.querySelector('[data-guest]').hidden = state.signedIn;
+}
 function route() {
+  if (location.hash === '#shelf') return ['/', new URLSearchParams()];
   const [path, query] = (location.hash.slice(1) || '/').split('?');
   return [path, new URLSearchParams(query)];
 }
@@ -99,7 +100,7 @@ function screen(path, query) {
   if (path.startsWith('/account') && !state.signedIn) {
     return ['ログインが必要です', actions(btn('ログイン', '/login', {next:path}, true), btn('会員登録', '/signup', {next:path}))];
   }
-  if (path === '/') return [shopName, home()];
+
   if (path === '/posting-rules') return ['投稿ルール',
     block('掲載できる夢', '<p>本当に眠っている間に見た夢だけを掲載します。途中で終わった夢も、そのまま投稿できます。</p>') +
     block('当店に並べられない夢', '<p>以下の内容を含む投稿は禁止です。</p>' + postingRulesList) +
@@ -107,7 +108,12 @@ function screen(path, query) {
   if (path === '/dreams') {
     const genre = query.get('genre') || 'すべて';
     const dreams = state.dreams.filter(d => d.status === '公開中' && (genre === 'すべて' || d.genre === genre));
-    return ['本棚','<form class="card" data-form="filter"><label>ジャンル<select name="genre">' + ['すべて', ...genres].map(g => option(g,genre)).join('') + '</select></label></form><div class="grid">' + (dreams.length ? dreams.map(d => '<article class="card"><span class="tag">'+esc(d.genre)+'</span><h2>'+link(d.title,dreamPath(d))+'</h2><p>'+esc(d.summary)+'</p>'+btn('あらすじを読む',dreamPath(d))+'</article>').join('') : '<p>このジャンルの作品はありません。</p>') + '</div>'];
+    const filter = '<form class="shelf-filter" data-form="filter"><label>ジャンル<select name="genre">' +
+      ['すべて', ...genres].map(g => option(g, genre)).join('') + '</select></label></form>';
+    const books = dreams.length
+      ? '<ul class="book-grid">' + dreams.map(bookCard).join('') + '</ul>'
+      : '<p class="notice">このジャンルの作品はありません。</p>';
+    return ['本棚', '<section class="catalog">' + filter + books + '</section>'];
   }
   if (Object.hasOwn(info,path)) return [info[path][0],block('ご案内','<p>'+info[path][1]+'</p>') + (path === '/royalties' ? actions(btn('夢を投稿する','/account/dreams/new',null,true)) : back('利用案内','/help'))];
   if (path === '/help') return ['利用案内',block('読み方と投稿方法','<p>本棚であらすじを読み、全文は「夢の鍵」から購入します。購入した作品はマイページから再読できます。</p><p>投稿は運営による審査を経て公開されます。</p>')+block('問い合わせ・規約','<p>問い合わせ先は準備中です。</p>'+actions(btn('利用規約','/terms'),btn('プライバシーポリシー','/privacy')))];
@@ -120,9 +126,9 @@ function screen(path, query) {
   if (path === '/account') return ['マイページ','<div class="grid">'+[
     ['購入した夢','/account/library'],['夢を投稿','/account/dreams/new'],['自分の投稿','/account/dreams'],['売上・報酬','/account/earnings']
   ].map(([label,target])=>block(label,btn(label+'を開く',target))).join('')+'</div>'+actions('<button data-logout>ログアウト</button>')];
-  if (path === '/account/library') return ['購入した夢',back('マイページ','/account') + state.dreams.filter(d=>state.purchased.includes(d.id)).map(d=>block(d.title,d.status==='公開中'?btn('全文を読む',dreamPath(d)+'/read',null,true):'<p>非公開</p>'+link('問い合わせ先','/help'))).join('')];
+  if (path === '/account/library') return ['購入した夢',back('マイページ','/account') + state.dreams.filter(d=>state.purchased.includes(d.id)).map(d=>accountDreamCard(d,d.status==='公開中'?btn('全文を読む',dreamPath(d)+'/read',null,true):'<p>非公開</p>'+link('問い合わせ先','/help'))).join('')];
   if (path === '/account/dreams/new') return ['夢を投稿',postForm()];
-  if (path === '/account/dreams') return ['自分の投稿',back('マイページ','/account')+(query.has('submitted')?notice('審査へ提出しました。'):'')+state.dreams.filter(d=>d.own).map(d=>block(d.title,'<p>'+esc(d.status)+'</p>'+btn('詳細を確認',ownPath(d)))).join('')+actions(btn('新しい夢を投稿','/account/dreams/new',null,true))];
+  if (path === '/account/dreams') return ['自分の投稿',back('マイページ','/account')+(query.has('submitted')?notice('審査へ提出しました。'):'')+state.dreams.filter(d=>d.own).map(d=>accountDreamCard(d,'<p>'+esc(d.status)+'</p>'+btn('詳細を確認',ownPath(d)))).join('')+actions(btn('新しい夢を投稿','/account/dreams/new',null,true))];
   if (path === '/account/earnings') return ['売上・報酬',back('マイページ','/account')+earnings(state.dreams.filter(d=>d.own))];
   const own = path.match(/^\/account\/dreams\/([^/]+)$/);
   if (own) {
@@ -154,7 +160,7 @@ function dreamScreen(d, mode, query) {
   if (mode === 'report') return ['通報',back('作品に戻る',query.get('from')==='read' ? base+'/read' : base)+ (query.has('sent') ? notice('通報を受け付けました。') : '<form class="card" data-form="report" data-id="'+esc(d.id)+'"><p>対象作品　'+esc(d.title)+'</p>'+field('通報理由','reason','',4)+submit('通報する')+'</form>')];
   if (mode === 'read') {
     if (!bought) return ['夢の全文',notice('全文は購入後に読めます。')+actions(btn('夢の扉へ',base,null,true))];
-    return [d.title, back('購入した夢','/account/library')+block('夢の全文','<p class="read">'+esc(d.body)+'</p>')+link('この夢を通報する',base+'/report',{from:'read'})];
+    return [d.title, back('購入した夢','/account/library')+'<article class="card reading-page"><h2>夢の全文</h2><p class="read">' + esc(d.body) + '</p></article>'+link('この夢を通報する',base+'/report',{from:'read'})];
   }
   if (mode === 'checkout') {
     if (!state.signedIn) return ['夢の鍵',notice('購入にはログインが必要です。')+actions(btn('ログインして購入へ','/login',{next:base+'/checkout'},true),btn('会員登録','/signup',{next:base+'/checkout'}))];
@@ -162,7 +168,7 @@ function dreamScreen(d, mode, query) {
     if (query.has('demo')) return ['外部決済（デモ）',back('夢の鍵',base+'/checkout')+notice('購入金額　150円（仮価格）')+block('決済結果を選ぶ','<div class="stack">'+[['success','成功'],['pending','処理中'],['failed','失敗'],['cancelled','キャンセル']].map(([value,label])=>'<button data-pay="'+value+'" data-id="'+esc(d.id)+'">'+label+'</button>').join('')+'</div>')];
     return ['夢の鍵',back('夢の扉',base)+block('購入内容','<p>'+esc(d.title)+'</p><p><strong>150円</strong>（仮価格）</p>'+actions(btn('外部決済へ進む（デモ）',base+'/checkout',{demo:1},true)))];
   }
-  return [d.title,back('本棚','/dreams')+'<article class="card"><span class="tag">'+esc(d.genre)+'</span><h2>無料のあらすじ</h2><p>'+esc(d.summary)+'</p></article>'+block('夢の全文', (bought ? '<p>購入済み</p>' : '<p>全文1件 <strong>150円</strong>（仮価格）</p>') + actions(bought ? btn('全文を読む',base+'/read',null,true) : btn('夢の鍵へ進む',base+'/checkout',null,true)))+link('この夢を通報する',base+'/report')];
+  return [d.title,back('本棚','/dreams')+'<article class="card dream-preview">' + thumbnail(d) + '<div><span class="tag">' + esc(d.genre) + '</span><h2>無料のあらすじ</h2><p>' + esc(d.summary) + '</p></div></article>'+block('夢の全文', (bought ? '<p>購入済み</p>' : '<p>全文1件 <strong>150円</strong>（仮価格）</p>') + actions(bought ? btn('全文を読む',base+'/read',null,true) : btn('夢の鍵へ進む',base+'/checkout',null,true)))+link('この夢を通報する',base+'/report')];
 }
 
 function postForm(d) {
@@ -184,7 +190,7 @@ function admin(path, query) {
   if (path === '/admin/transactions') return ['購入・報酬管理',nav+block('決済結果','<ul>'+(state.payments || []).map(entry=>'<li>'+esc(state.dreams.find(d=>d.id===entry.id)?.title)+' · '+({success:'成功',pending:'処理中',failed:'失敗',cancelled:'キャンセル'}[entry.status])+'</li>').join('')+'</ul>')+earnings(state.dreams.filter(d=>state.purchased.includes(d.id)))];
   if (path === '/admin/reports') return ['通報・公開管理',nav+(state.reports.length?state.reports.map((r,i)=>{
     const d=state.dreams.find(d=>d.id===r.id);
-    return block(d.title,'<p>作品の状態　'+esc(d.status)+'</p><p class="read">'+esc(r.reason)+'</p>'+(r.note?notice('対応記録　'+r.note):'')+
+    return block(d.title,'<p>作品の状態　'+esc(d.status)+'</p><p class="read">'+esc(r.reason)+'</p>'+(r.note?notice('対応記録　'+esc(r.note)):'')+
       '<form data-form="moderate" data-index="'+i+'">'+field('対応記録','note',r.note,2)+'<label>公開状態<select name="status">'+['公開中','非公開'].map(s=>option(s,d.status)).join('')+'</select></label>'+submit('対応を保存')+'</form>');
   }).join(''):notice('通報はありません。作品の通報フォームから追加できます。'))];
   const d = state.dreams.find(d=>d.id===query.get('id') && d.status==='審査中');
@@ -194,20 +200,38 @@ function admin(path, query) {
   return ['投稿審査',nav+(queue.length?queue.map(d=>block(d.title,btn('内容を確認',path,{id:d.id},true))).join(''):notice('審査中の投稿はありません。夢を投稿するとここに追加されます。'))];
 }
 
-function render(focus=true) {
-  const [path,query] = route();
-  const [title,body] = screen(path,query);
-  main.classList.toggle('shop-home', path === '/');
-  main.innerHTML=path === '/' ? body : '<h1>'+esc(title)+'</h1>'+body;
-  document.title=path === '/' ? shopName+' β版' : title+' | '+shopName+' β版';
-  const tab = path.startsWith('/dreams') || path.startsWith('/checkout') ? '/dreams' : path === '/account/dreams/new' ? path : path.startsWith('/account') ? '/account' : path;
-  document.querySelectorAll('.tabs a').forEach(a=>{
-    if (a.hash===url(tab)) a.setAttribute('aria-current','page');
+function render(focus = true) {
+  const [path, query] = route();
+  const isHome = path === '/';
+  const [title, body] = isHome ? [shopName, ''] : screen(path, query);
+  main.classList.toggle('shop-home', isHome);
+  main.classList.toggle('inner-page', !isHome);
+
+  if (isHome) {
+    home();
+  } else {
+    main.innerHTML = `<header class="page-heading"><div class="shell">
+      <svg aria-hidden="true"><use href="#moon"/></svg><h1>${esc(title)}</h1>
+      </div></header><div class="page-content shell">${body}</div>`;
+  }
+
+  document.title = isHome ? shopName + ' β版' : title + ' | ' + shopName + ' β版';
+  const activePath = (path === '/login' || path === '/signup') ? query.get('next') || '/account' : path;
+  const tab = activePath.startsWith('/dreams') || activePath.startsWith('/checkout') ? '/dreams'
+    : activePath === '/account/dreams/new' ? activePath
+    : activePath.startsWith('/account') ? '/account' : activePath;
+  document.querySelectorAll('.desktop-nav a, .mobile-nav a').forEach(a => {
+    if (a.hash === url(tab)) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
-  if (focus) { window.scrollTo(0,0); main.focus({preventScroll:true}); }
-}
 
+  if (location.hash === '#shelf') {
+    document.querySelector('#shelf').scrollIntoView();
+  } else if (focus) {
+    window.scrollTo({top: 0, behavior: 'instant'});
+    main.focus({preventScroll: true});
+  }
+}
 main.addEventListener('change', event=>{
   if (event.target.name==='genre' && event.target.form?.dataset.form==='filter') go('/dreams',{genre:event.target.value});
   if (event.target.name==='status' && event.target.form?.dataset.form==='review') event.target.form.elements.reason.required = event.target.value==='要修正';
@@ -277,5 +301,8 @@ document.addEventListener('click',event=>{
   }
 });
 document.querySelector('.skip').addEventListener('click',event=>{ event.preventDefault(); main.focus(); });
-window.addEventListener('hashchange',()=>render());
+window.addEventListener('hashchange', () => {
+  if (location.hash === '#shelf' && main.classList.contains('shop-home')) return;
+  render();
+});
 render(false);
