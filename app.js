@@ -49,15 +49,14 @@ function home() {
   return `
     <section class="shop-entrance" aria-labelledby="shop-title">
       <div class="shop-moon" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
-      <p class="shop-kicker">本当に見た夢だけを集めた本屋</p>
       <h1 id="shop-title">${shopName}</h1>
-      <p class="shop-lead">あなたが眠っている間に見た夢が、<br>誰かの読みたい物語になる。</p>
+      <p class="shop-lead">何度も繰り返し見る夢。<br>目が覚めても、忘れられない夢。</p>
       ${btn('本棚をのぞく', '/dreams', null, true)}
     </section>
     <section class="shop-letter" aria-labelledby="shop-about">
-      <h2 id="shop-about">人が見た夢の話を聞くのは、好きですか？</h2>
-      <p>この世に存在しない景色。起こるはずのない出来事。<br>けれど、誰かが確かに眠りの中で見た世界。</p>
-      <p>怖い夢も、幸せな夢も、どこか不思議な夢ばかり。<br>ここは、そんな夢を集めた本屋です。</p>
+      <h2 id="shop-about">あなたも、そんな夢を見たことはありませんか？</h2>
+      <p>どこの世界なのかもわからない場所。<br>人間ではない、見知らぬ存在との出会い。<br>現実では説明できない、不思議な出来事。</p>
+      <p>ここに集めたいのは、<br>誰かが本当に眠りの中で体験した、不思議な夢だけ。</p>
     </section>
     <section class="shop-shelf" aria-labelledby="shop-picks">
       <p class="shop-kicker">棚からひとつまみ</p>
@@ -73,12 +72,12 @@ function home() {
       ${btn('すべての夢を見る', '/dreams')}
     </section>
     <section class="shop-letter shop-author" aria-labelledby="shop-writers">
-      <h2 id="shop-writers">作家のみなさんへ</h2>
-      <p>今夜も、どうかたくさん眠ってください。</p>
-      <p>どんなに奇妙な夢でも、途中で終わってしまった夢でも構いません。<br>あなたが眠りの中で出会う世界を、楽しみに待っている読者がいます。</p>
-      <p>眠ることも、あなたのお仕事なのですから。<br>おやすみなさい。<span aria-hidden="true"> ☾</span></p>
-      <p class="shop-signature">― ${shopName}</p>
-      ${btn('見た夢を本棚へ', '/account/dreams/new', null, true)}
+      <h2 id="shop-writers">心のどこかに残っている不思議な夢</h2>
+      <p>誰かに話したかったけれど、<br>うまく言葉にできなかった。</p>
+      <p>話しても、信じてもらえない気がした。</p>
+      <p>あなたが見た、その夢の話を聞かせてください。</p>
+      <p>ここは、誰かが本当に見た不思議な夢だけが集まる場所。</p>
+      ${btn('夢を投稿する', '/account/dreams/new', null, true)}
       <p class="shop-note">投稿は無料です。 ${link('報酬の仕組み', '/royalties')}</p>
     </section>
     <details class="shop-rules">

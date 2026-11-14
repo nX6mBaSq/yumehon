@@ -49,7 +49,6 @@ body:has(.shop-home) .tabs a[aria-current]{background:#efe8f3;border-color:#5543
   color:#fff7e7;border-radius:1.5rem 1.5rem .5rem .5rem;padding:clamp(2.2rem,7vw,5rem) 1rem}
 .shop-entrance h1{font-size:clamp(1.4rem,6vw,4.6rem);font-weight:600;letter-spacing:.04em;margin:.5rem 0 1rem}
 .shop-kicker{color:#64547a;font-size:.85rem;font-weight:700;letter-spacing:.13em;margin:0 0 .35rem}
-.shop-entrance .shop-kicker{color:#eed2a8}
 .shop-lead{font-size:clamp(1rem,3vw,1.4rem);line-height:1.9;margin-bottom:1.6rem;text-wrap:balance}
 .shop-moon{position:relative;width:3.4rem;height:3.4rem;margin:0 auto 1.3rem;border-radius:50%;box-shadow:inset -.83rem -.36rem 0 #f5d9a7;color:#eed2a8;transform:rotate(-15deg)}
 .shop-moon span{position:absolute;font-size:.82rem;transform:rotate(15deg)}
@@ -74,7 +73,6 @@ body:has(.shop-home) .tabs a[aria-current]{background:#efe8f3;border-color:#5543
 .shop-book p{font-size:.93rem;margin:.3rem 0 1rem}
 .shop-genre,.shop-read{font-size:.84rem;color:#55436d}
 .shop-read{margin-top:auto;text-decoration:underline;text-underline-offset:.2em}
-.shop-signature{font-family:var(--serif)}
 .shop-rules{max-width:42rem;margin-inline:auto;border-block:1px solid #ded6c9;padding-inline:.65rem}
 .shop-rules summary{cursor:pointer;font-weight:700;padding:.75rem 0}
 .shop-rules summary:focus-visible{outline:3px solid #555;outline-offset:3px}
