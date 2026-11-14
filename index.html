@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#151425">
+<meta name="theme-color" content="#0b0f15"><meta name="description" content="眠りの中で見た夢が、一冊の本になって並ぶ。不思議な夢の本屋さん。">
 <title>不思議な夢の本屋さん｜トップページ</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="pages.css">
-<script src="app.js" defer></script>
+<link rel="stylesheet" href="night.css"><script src="transitions.js"></script><script src="experience.js" defer></script><script src="app.js" defer></script>
 </head>
 <body id="top">
 <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -18,6 +18,14 @@
   <symbol id="pen" viewBox="0 0 24 24"><path d="m4 20 2-6L17 3l4 4L10 18l-6 2ZM15 5l4 4"/></symbol>
   <symbol id="person" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></symbol>
 </svg>
+<div class="dream-loader" aria-hidden="true">
+  <div class="loader-core">
+    <div class="loader-emblem"><svg><use href="#moon"/></svg></div>
+    <p>THE DREAM BOOKSHOP</p>
+    <span>夜のとびらを開いています</span>
+    <i></i>
+  </div>
+</div>
 <a class="skip" href="#main">本文へ</a>
 <header class="header">
   <div class="shell header-inner">
@@ -25,61 +33,83 @@
     <nav class="desktop-nav" aria-label="メインメニュー">
       <a href="#/" aria-current="page">トップ</a><a href="#/dreams">本棚</a><a href="#/account/dreams/new">夢を投稿</a><a href="#/account">マイページ</a>
     </nav>
-    <span class="beta">BETA</span>
+    <span class="beta">β EDITION</span>
   </div>
 </header>
 <main id="main" tabindex="-1"></main>
 <template id="home-page">
-  <section class="hero" aria-labelledby="hero-title">
-    <img src="assets/bookshop.jpg" alt="" class="hero-image" fetchpriority="high">
-    <div class="hero-frame" aria-hidden="true"></div>
-    <div class="shell hero-inner">
-      <p class="eyebrow"><svg aria-hidden="true"><use href="#star"/></svg> THE DREAM BOOKSHOP</p>
-      <h1 id="hero-title">不思議な夢の<br>本屋さん</h1>
-      <p class="hero-copy">何度も繰り返し見る夢。<br>目が覚めても、忘れられない夢。</p>
-      <a class="button gold" href="#shelf">本棚をのぞく <span aria-hidden="true">↓</span></a>
+  <section class="night-hero" aria-labelledby="hero-title">
+    <picture class="night-scene"><source srcset="assets/moon-alley.webp" type="image/webp"><img src="assets/bookshop.jpg" alt="" fetchpriority="high"></picture>
+    <div class="night-shade"></div>
+    <canvas class="dust" aria-hidden="true"></canvas>
+    <div class="viewfinder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hero-layout night-shell">
+      <div class="night-intro">
+        <p class="chapter-label"><span>✦</span> PROLOGUE <b></b> THE DREAM BOOKSHOP</p>
+        <h1 id="hero-title">不思議な夢の<br><em>本屋さん</em></h1>
+        <p class="night-lede">ここは、誰かが眠りの中で見た夢が、<br>一冊の本になって並ぶ本屋です。</p>
+        <div class="night-actions">
+          <button class="gilt" type="button" data-enter aria-haspopup="dialog">最初の一頁を開く <span aria-hidden="true">↗</span></button>
+          <a class="quiet-link" href="#shelf">本棚をのぞく <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <div class="artifact">
+        <div class="artifact-halo" aria-hidden="true"></div>
+        <div class="orbit" aria-hidden="true"><span>✦</span><span>✧</span></div>
+        <button type="button" class="relic-trigger" data-enter aria-label="夢の本を開く" aria-haspopup="dialog">
+          <span class="relic" aria-hidden="true">
+            <span class="folio-back"></span><span class="folio-spine"></span><span class="folio-edge"></span><span class="folio-top"></span>
+            <span class="folio-leaf"><i>01</i><b>夜のとびら</b><small>✦</small></span>
+            <span class="folio-cover">
+              <span class="cover-border"></span>
+              <span class="cover-cap">THE DREAM BOOKSHOP</span>
+              <svg class="cover-seal" viewBox="0 0 120 150" fill="none">
+                <path d="M13 134V64a47 47 0 0 1 94 0v70M19 134V64a41 41 0 0 1 82 0v70M9 135h102m-99 6h96M27 130V65a33 33 0 1 1 66 0v65" stroke="currentColor"/>
+                <path d="M73 53a26 26 0 1 0 10 37A24 24 0 0 1 73 53Z" fill="currentColor"/>
+                <path d="M77 65l2.4 7.6L87 75l-7.6 2.4L77 85l-2.4-7.6L67 75l7.6-2.4ZM58 104l2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="currentColor"/>
+                <path d="m5 50 4 8-4 8-4-8Zm110 0 4 8-4 8-4-8ZM60 1l4 7-4 7-4-7Z" fill="currentColor"/>
+              </svg>
+              <span class="cover-title">夢の目録</span>
+              <span class="cover-cap cover-no">Nº 001 &nbsp; · &nbsp; 夜のとびら</span>
+            </span>
+          </span>
+        </button>
+        <p class="artifact-caption"><b>I</b>　夢の目録 <span>／ THE NOCTURNAL ATLAS</span></p>
+      </div>
     </div>
+    <div class="hero-index night-shell"><span>01 / 03 <i></i> 夜のとびら</span><a href="#shelf">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
   </section>
-  <section class="intro paper" aria-labelledby="intro-title">
-    <div class="shell">
-      <div class="ornament" aria-hidden="true"><svg><use href="#moon"/></svg></div>
-      <p class="eyebrow">本屋からの手紙</p>
-      <h2 id="intro-title">あなたも、そんな夢を<br class="mobile-break">見たことはありませんか？</h2>
-      <p>どこの世界なのかもわからない場所。<br>人間ではない、見知らぬ存在との出会い。<br>現実では説明できない、不思議な出来事。</p>
-      <p>ここに集めたいのは、<br>誰かが本当に眠りの中で体験した、<br class="mobile-break">不思議な夢だけ。</p>
-    </div>
-  </section>
-  <section id="shelf" class="shelf" aria-labelledby="shelf-title">
-    <div class="shell">
-      <div class="shelf-heading">
-        <p class="eyebrow"><svg aria-hidden="true"><use href="#star"/></svg> 棚からひとつまみ</p>
-        <h2 id="shelf-title">本棚から、今夜の一冊</h2>
-        <p class="note">あらすじは無料。全文は一話150円（仮価格）です。</p>
+  <section id="shelf" class="dream-shelf" aria-labelledby="shelf-title">
+    <div class="night-shell">
+      <div class="shelf-lead">
+        <div><p class="chapter-label"><span>✦</span> CHAPTER I <b></b> THE SHELF</p><h2 id="shelf-title">今夜の、<em>一冊。</em></h2></div>
+        <p>目が覚めても忘れられない、夢の断片。<br>気になる一冊を手に取ってみてください。</p>
       </div>
       <ul class="book-grid" data-home-books></ul>
-      <a class="button outline" href="#/dreams">すべての夢を見る <span aria-hidden="true">→</span></a>
+      <div class="shelf-foot"><p>掲載作品はβ版のサンプルです。あらすじは無料で読めます。</p><a class="quiet-link" href="#/dreams">すべての夢を見る <span aria-hidden="true">→</span></a></div>
     </div>
   </section>
-  <section class="write paper" aria-labelledby="write-title">
-    <div class="shell write-grid">
-      <div class="write-image"><img src="assets/reading-room.jpg" alt="月明かりの差す書斎に、本がふわりと浮かぶ" loading="lazy"></div>
-      <div class="write-copy">
-        <p class="eyebrow">あなたの夢も、一冊に</p>
-        <h2 id="write-title">心のどこかに残っている<br>不思議な夢</h2>
-        <p>誰かに話したかったけれど、うまく言葉にできなかった。<br class="desktop-break">話しても、信じてもらえない気がした。</p>
-        <p>あなたが見た、その夢の話を聞かせてください。</p>
-        <p>ここは、誰かが本当に見た<br class="mobile-break">不思議な夢だけが集まる場所。</p>
-        <a class="button ink" href="#/account/dreams/new">夢を投稿する <span aria-hidden="true">→</span></a>
-        <p class="note">投稿は無料です。 <a href="#/royalties">報酬の仕組み</a></p>
+  <section class="night-write" aria-labelledby="write-title">
+    <div class="night-shell night-write-grid">
+      <figure class="window-art"><img src="assets/reading-room.jpg" alt="" loading="lazy"><figcaption>FIG. 02　眠りと目覚めのあいだ</figcaption></figure>
+      <div class="write-letter">
+        <p class="chapter-label"><span>✦</span> CHAPTER II <b></b> YOUR DREAM</p>
+        <h2 id="write-title">あなたの夢を、<br><em>この棚に。</em></h2>
+        <p>遠い場所にいたこと。誰かの声を聞いたこと。<br>結末が思い出せなくても、かまいません。<br>眠りの中で本当に見た夢を、聞かせてください。</p>
+        <a class="gilt" href="#/account/dreams/new">夢を書き残す <span aria-hidden="true">↗</span></a>
+        <p class="letter-meta">投稿は無料です。 <a href="#/posting-rules">投稿ルール</a><span data-guest> ・ <a href="#/login">ログイン</a></span></p>
       </div>
     </div>
-    <div class="shell afterword">
-      <details><summary>当店に並べられない夢</summary><p>作り話やAIによって創作された夢、個人情報や性的な描写を含む夢などは掲載できません。</p><a href="#/posting-rules">投稿ルールを読む →</a></details>
-      <p class="note" data-guest>はじめての方は <a href="#/signup">会員登録</a> ・ <a href="#/login">ログイン</a></p>
-    </div>
   </section>
+  <dialog class="story" aria-labelledby="story-title">
+    <button class="story-close" type="button" data-close aria-label="序章を閉じる">×</button>
+    <p class="chapter-label"><span>✦</span> PROLOGUE <b></b> <span data-folio>01 / 02</span></p>
+    <h2 id="story-title" tabindex="-1">夜のとびら</h2>
+    <p class="story-body">閉店の時刻を過ぎた町に、一軒だけ灯りがともっていた。<br>扉を押すと、どこからか紙の匂いがした。<br>「今夜は、どんな夢をお探しですか？」</p>
+    <div class="story-choices"><button class="gilt" type="button" data-next>頁をめくる <span aria-hidden="true">→</span></button></div>
+  </dialog>
 </template>
-<footer class="footer">
+<noscript><p style="text-align:center;color:#fff">夢の本屋さんを開くには、JavaScriptを有効にしてください。</p></noscript><footer class="footer">
   <div class="shell footer-inner">
     <a class="brand" href="#/"><svg aria-hidden="true"><use href="#moon"/></svg><span>不思議な夢の本屋さん</span></a>
     <div class="footer-links"><a href="#/help">利用案内</a><a href="#/posting-rules">投稿ルール</a><a href="#/royalties">報酬の仕組み</a></div>

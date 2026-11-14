@@ -113,7 +113,7 @@ function screen(path, query) {
     const books = dreams.length
       ? '<ul class="book-grid">' + dreams.map(bookCard).join('') + '</ul>'
       : '<p class="notice">このジャンルの作品はありません。</p>';
-    return ['本棚', '<section class="catalog">' + filter + books + '</section>'];
+    return ['本棚', '<section class="catalog dream-shelf">' + filter + books + '</section>'];
   }
   if (Object.hasOwn(info,path)) return [info[path][0],block('ご案内','<p>'+info[path][1]+'</p>') + (path === '/royalties' ? actions(btn('夢を投稿する','/account/dreams/new',null,true)) : back('利用案内','/help'))];
   if (path === '/help') return ['利用案内',block('読み方と投稿方法','<p>本棚であらすじを読み、全文は「夢の鍵」から購入します。購入した作品はマイページから再読できます。</p><p>投稿は運営による審査を経て公開されます。</p>')+block('問い合わせ・規約','<p>問い合わせ先は準備中です。</p>'+actions(btn('利用規約','/terms'),btn('プライバシーポリシー','/privacy')))];
@@ -200,18 +200,35 @@ function admin(path, query) {
   return ['投稿審査',nav+(queue.length?queue.map(d=>block(d.title,btn('内容を確認',path,{id:d.id},true))).join(''):notice('審査中の投稿はありません。夢を投稿するとここに追加されます。'))];
 }
 
+function activeWriting(path, query) {
+  const destination = path === "/login" || path === "/signup" ? query.get("next") || "" : path;
+  return destination.startsWith("/account/dreams");
+}
+
 function render(focus = true) {
   const [path, query] = route();
   const isHome = path === '/';
   const [title, body] = isHome ? [shopName, ''] : screen(path, query);
+  window.nightExperience?.dispose();
+  document.body.classList.toggle('night-home', isHome);
+  document.body.classList.toggle('night-interior', !isHome);
   main.classList.toggle('shop-home', isHome);
   main.classList.toggle('inner-page', !isHome);
 
   if (isHome) {
     home();
+    window.nightExperience?.mount(main, state.dreams.filter(d => d.status === '公開中'));
   } else {
-    main.innerHTML = `<header class="page-heading"><div class="shell">
-      <svg aria-hidden="true"><use href="#moon"/></svg><h1>${esc(title)}</h1>
+    const chapter = path === '/dreams' ? 'CHAPTER I · THE SHELF'
+      : path.startsWith('/dreams/') || path.startsWith('/checkout/') ? 'THE DREAM ARCHIVE'
+      : activeWriting(path, query) ? 'CHAPTER II · YOUR DREAM'
+      : path.startsWith('/account') || ['/login', '/signup'].includes(path) ? 'THE READER’S ROOM'
+      : path.startsWith('/admin') ? 'THE BOOKKEEPER’S DESK'
+      : 'NOTES FROM THE SHOP';
+    main.innerHTML = `<header class="page-heading">
+      <picture class="page-atmosphere"><source srcset="assets/moon-alley.webp" type="image/webp"><img src="assets/bookshop.jpg" alt="" fetchpriority="high"></picture>
+      <div class="shell"><svg aria-hidden="true"><use href="#moon"/></svg>
+      <p class="chapter-label"><span aria-hidden="true">✦</span> ${chapter}</p><h1>${esc(title)}</h1>
       </div></header><div class="page-content shell">${body}</div>`;
   }
 
@@ -302,7 +319,12 @@ document.addEventListener('click',event=>{
 });
 document.querySelector('.skip').addEventListener('click',event=>{ event.preventDefault(); main.focus(); });
 window.addEventListener('hashchange', () => {
-  if (location.hash === '#shelf' && main.classList.contains('shop-home')) return;
-  render();
+  if (location.hash === '#shelf' && main.classList.contains('shop-home')) {
+    document.querySelector('#shelf').scrollIntoView();
+    return;
+  }
+  if (window.dreamTransitions) window.dreamTransitions.navigate(() => render());
+  else render();
 });
 render(false);
+window.dreamTransitions?.ready(main);
