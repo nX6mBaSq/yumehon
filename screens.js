@@ -227,7 +227,7 @@ function render() {
   document.body.classList.toggle("is-top", isHome);
   document.querySelector(".preview").hidden = name !== "map" && new URLSearchParams(location.search).get("preview") !== "1";
   $("header").innerHTML = window.dreamHome.header(navigation);
-  $("footer").innerHTML = `<div class="bar">${window.dreamHome.brand()}<nav aria-label="フッター">${link("help","ご利用案内")}${link("contact","お問い合わせ")}${link("ads","広告・アフィリエイトについて")}${link("terms","利用規約")}${link("privacy","プライバシーポリシー")}</nav></div>`;
+  $("footer").innerHTML = `<div class="bar">${window.dreamHome.brand()}<nav aria-label="フッター">${link("help","ご利用案内")}${link("contact","お問い合わせ")}${link("ads","広告・アフィリエイトについて")}${link("terms","利用規約")}${link("privacy","プライバシーポリシー")}</nav><p class="copyright"><small>&copy; 2026 不思議な夢の本屋さん</small></p></div>`;
   $("screen").innerHTML = Object.hasOwn(screens,name) ? screens[name](id) : unavailable("画面が見つかりません","画面一覧から選択してください。");
   const heading = $("screen").querySelector("h1");
   document.title = isHome ? "不思議な夢の本屋さん" : heading.textContent + "｜不思議な夢の本屋さん";
