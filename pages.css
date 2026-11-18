@@ -15,24 +15,6 @@
 }
 .home-view a { color: inherit; }
 
-/* ---------- トップ：このお店は、どんな場所？ ---------- */
-.home-about-note {
-  margin: 1.25rem auto .25rem;
-  font: 500 .875rem/1.85 var(--serif);
-  text-align: center;
-  color: var(--muted-text);
-}
-.home-text-link { margin: 0; text-align: center; }
-.home-text-link a {
-  display: inline-flex;
-  align-items: center;
-  gap: .4em;
-  min-height: 44px;
-  color: var(--link);
-  font: 700 .9375rem/1.4 var(--serif);
-  text-underline-offset: .3em;
-}
-
 /* 届いた夢カード：分析ありの印 */
 .dream-page .dream-mark { margin: 0 0 .5rem; }
 .dream-mark span {

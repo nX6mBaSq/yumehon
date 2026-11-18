@@ -137,7 +137,8 @@ const screens = {
   new: () => diaryEditor(false),
   edit: () => diaryEditor(true),
   settings: () => page("アカウント設定",form("settings",field("ペンネーム",input("pen",account.pen))+field("連絡先メールアドレス",input("email",account.email,"email"))+actions(submit("保存する"),link("me","マイページへ")))),
-  about: () => page("この本屋さんについて","<p>眠っている間に実際に見た夢を記録したり、誰かが公開した夢を読んだりできる場所です。気になった夢は、短い広告のあとに「この夢を見たい人向けの分析」を読めます。投稿・閲覧・分析はすべて無料です。</p>"+actions(button("new","夢を記録する",true),button("browse","夢を読む"))),
+  // 「この本屋さんについて」ページは一旦非表示（戻すときは行頭の // を外す）
+  // about: () => page("この本屋さんについて","<p>眠っている間に実際に見た夢を記録したり、誰かが公開した夢を読んだりできる場所です。気になった夢は、短い広告のあとに「この夢を見たい人向けの分析」を読めます。投稿・閲覧・分析はすべて無料です。</p>"+actions(button("new","夢を記録する",true),button("browse","夢を読む"))),
   help: () => page("ご利用案内",
     section("夢を記録する","<p>ログインして日記を作成します。公開／非公開と、分析ボタンを付けるかどうかを日記ごとに選べます。</p>")+
     section("夢を読む","<p>夢の本棚で、公開された日記を無料で読めます。</p>")+
@@ -196,7 +197,7 @@ screens.admin = id => {
 };
 
 const screenGroups = [
-  ["公開・共通",[["home","トップ"],["browse","公開夢日記一覧"],["dream/0","公開日記詳細（分析あり）"],["dream/3","公開日記詳細（分析なし）"],["analysis/0","夢分析ページ（広告→分析）"],["external/advertiser","広告主サイトへの遷移"],["external/item","通販サイトへの遷移"],["report/0","通報フォーム"],["reported","通報完了"],["about","この本屋さんについて"],["help","ご利用案内"],["ads","広告・アフィリエイトについて"],["contact","お問い合わせ"],["contacted","お問い合わせ完了"],["terms","利用規約"],["privacy","プライバシーポリシー"]]],
+  ["公開・共通",[["home","トップ"],["browse","公開夢日記一覧"],["dream/0","公開日記詳細（分析あり）"],["dream/3","公開日記詳細（分析なし）"],["analysis/0","夢分析ページ（広告→分析）"],["external/advertiser","広告主サイトへの遷移"],["external/item","通販サイトへの遷移"],["report/0","通報フォーム"],["reported","通報完了"],["help","ご利用案内"],["ads","広告・アフィリエイトについて"],["contact","お問い合わせ"],["contacted","お問い合わせ完了"],["terms","利用規約"],["privacy","プライバシーポリシー"]]],
   ["会員・日記",[["login","ログイン"],["register","会員登録"],["me","マイページ"],["diaries","自分の夢日記一覧"],["new","日記の新規作成"],["mine","自分の日記詳細"],["edit","日記編集"],["myanalysis","自分の夢の分析（広告なし）"],["settings","アカウント設定"]]],
   ["運営権限",[["admin","運営管理"],...Object.entries(adminPages).map(([key,title])=>["admin/"+key,title])]]
 ];

@@ -57,12 +57,9 @@
       </section>
 
       <section class="home-about" aria-labelledby="home-about-title">
-        <h2 id="home-about-title">このお店は、どんな場所？</h2>
+        ${heading("home-about-title", "この本屋さんについて")}
         <img src="assets/bookstore-welcome.png" width="1199" height="1312" loading="lazy" decoding="async"
-          alt="不思議な夢の本屋さんへようこそ。いらっしゃいませ。当店は、眠りの中で本当に見た、不思議な夢の物語だけを集めた小さな本屋です。この本屋には、夢に呼ばれた人だけがたどり着けるのだとか。さあ、今日はどんな夢の世界に出会えるのでしょうか。">
-        <p class="home-about-note">実際に見た夢を無料で記録し、公開するかを自分で選べます。<br>公開された夢は、誰でも無料で読めます。</p>
-        <p class="home-text-link"><a href="#about">この本屋さんについて <span aria-hidden="true">›</span></a></p>
-      </section>
+          alt="不思議な夢の本屋さんへようこそ。いらっしゃいませ。当店は、眠りの中で本当に見た、不思議な夢の物語だけを集めた小さな本屋です。この本屋には、夢に呼ばれた人だけがたどり着けるのだとか。さあ、今日はどんな夢の世界に出会えるのでしょうか。">      </section>
 
       <section class="home-section home-dreams" aria-labelledby="home-dreams-title">
         ${heading("home-dreams-title", "届いた夢")}
@@ -110,7 +107,7 @@
       ${homeBrand()}
       <details class="home-menu">
         <summary><span class="menu-icon" aria-hidden="true"></span>メニュー</summary>
-        <nav aria-label="メイン">${navigation}${link("about", "この本屋さんについて")}</nav>
+        <nav aria-label="メイン">${navigation}</nav>
       </details>
     </div>`;
   }

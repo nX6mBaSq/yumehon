@@ -183,14 +183,6 @@
 .home-about {
   width: min(100%, 780px);
 }
-.home-about h2 {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 .home-about img {
   display: block;
   width: 100%;
