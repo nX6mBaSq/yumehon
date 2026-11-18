@@ -51,9 +51,9 @@
         <section class="home-hero" aria-labelledby="home-title">
           <div class="hero-art" aria-hidden="true"></div>
           <div class="hero-copy">
-            ${ornament}
-            <h1 id="home-title"><span>不思議な</span>夢の本屋さん</h1>
-            <p class="home-english" lang="en">The Dream Bookstore</p>
+            <h1 id="home-title">
+              <img src="assets/dream-bookstore-logo.png" width="1889" height="833" alt="不思議な夢の本屋さん">
+            </h1>
             <p class="hero-lead">あなたが眠っている間に見た夢が、<br>誰かの読みたい物語になる。</p>
             <h2>あなたが見た夢の話を<br>きかせてください。</h2>
             <div class="home-actions">
