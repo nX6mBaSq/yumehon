@@ -18,6 +18,20 @@
 .home-view :focus-visible { outline-color: #fff1ca; }
 .is-top #screen { max-width: none; padding: 0; }
 .is-top #screen section { margin: 0 auto; }
+.home-night-sky {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: clamp(1.5rem, 7vw, 2.75rem);
+}
+.home-night-sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url("assets/bookstore-night-sky-glow-v2.webp") center / 100% 100% no-repeat;
+  mask-image: linear-gradient(black 91%, transparent);
+}
 .home-view #header, .home-view #footer { background: transparent; border: 0; }
 .is-top #header {
   position: absolute;
@@ -388,36 +402,39 @@
 .home-ending {
   position: relative;
   isolation: isolate;
-  padding-top: clamp(3rem, 13vw, 6rem);
-  overflow: hidden;
+  display: grid;
   text-align: center;
-  font: 500 clamp(.875rem, 3.75vw, 1.25rem)/1.9 var(--serif);
-  background:
-    radial-gradient(circle at 15% 45%, #d5c3e8a0 0 1px, transparent 1.8px) 0 0 / 137px 101px,
-    radial-gradient(ellipse at 50% 55%, #253558, transparent 70%),
-    linear-gradient(transparent, #101a32 54%, var(--night-edge));
-  background-repeat: repeat, no-repeat, no-repeat;
+  background: linear-gradient(transparent 70%, var(--night-edge));
+}
+.ending-copy, .ending-art { grid-area: 1 / 1; }
+.ending-copy {
+  align-self: start;
+  min-width: 0;
+  padding: clamp(2rem, 8.7vw, 4rem) 1rem 0;
+  font: 500 clamp(.8125rem, 3.46vw, 1.1875rem)/1.76 var(--serif);
+  color: #fff1da;
+  text-shadow: 0 1px 3px #050719, 0 0 10px #050719;
 }
 .home-ending .ornate-heading {
-  position: relative;
-  z-index: 1;
-  width: min(90%, 780px);
-  margin: 0 auto .65em;
+  width: min(100%, 34rem);
+  margin: 0 auto .55em;
+  font-size: clamp(1.15rem, 5.15vw, 2rem);
+  font-weight: 600;
 }
-.home-ending p {
-  position: relative;
-  z-index: 1;
-  margin: 0 auto;
-  width: 94%;
-  text-shadow: 0 1px 4px #060a1e, 0 2px 12px #060a1e;
+.home-ending .ornate-heading span::before,
+.home-ending .ornate-heading span::after {
+  margin-inline: .4em;
+  font-size: .55em;
 }
+.ending-copy p { margin: 0; }
 .home-ending .goodnight {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: .28em;
-  margin-top: .8em;
-  font-size: 1.6em;
+  margin-top: .6em;
+  font-size: clamp(1.25rem, 5.64vw, 2.125rem);
+  line-height: 1.35;
 }
 .goodnight-moon {
   display: inline-block;
@@ -429,18 +446,18 @@
   transform: rotate(-12deg);
 }
 .ending-art {
-  --ending-fade: linear-gradient(transparent, #0008 12%, black 34%, black 82%, transparent);
-  position: relative;
+  --ending-fade: linear-gradient(transparent, black 14%, black 83%, transparent);
   z-index: -1;
   display: block;
-  width: min(100%, 880px);
+  width: min(100%, 840px);
   height: auto;
-  margin: -9em auto 0;
+  margin-inline: auto;
   mask-image: var(--ending-fade);
 }
 .home-view #footer {
   background: linear-gradient(transparent, var(--night-edge) 3.5rem);
 }
+.is-top #footer { background: var(--night-edge); }
 .home-view #footer .bar {
   display: grid;
   justify-items: center;
@@ -449,6 +466,7 @@
   gap: 1rem;
   text-align: center;
 }
+.is-top #footer .bar { padding-top: 1rem; }
 /* 上の区切り：金の細線 */
 .home-view #footer .bar::before {
   content: "";
@@ -489,13 +507,14 @@
 @media (min-width: 760px) {
   .dream-books { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 23px; width: 100%; }
   .category-windows { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (min-width: 900px) {
+  .ending-copy { padding-top: 4.5rem; }
   .ending-art {
     mask-image: linear-gradient(90deg, transparent, black 9%, black 91%, transparent),
       var(--ending-fade);
     mask-composite: intersect;
   }
+}
+@media (min-width: 900px) {
   .home-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -532,7 +551,7 @@
   .home-hero {
     position: relative;
     isolation: isolate;
-    background: linear-gradient(#0b1025 0 62%, #13192d 84%, transparent);
+    background: linear-gradient(#0b1025 0 48%, #0b1025d9 62%, #13192d66 84%, transparent);
   }
   .hero-art {
     display: block;
