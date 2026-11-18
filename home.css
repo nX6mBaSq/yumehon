@@ -559,10 +559,12 @@
   .hero-copy {
     width: 100%;
     margin: 0;
-    padding: 74vw 5.5% 2.35vw;
+    padding: 79vw 5.5% 2.35vw;
     font-weight: 500;
     line-height: 1.85;
   }
+  .hero-copy h1 { margin-inline: -3vw; }
+  .hero-copy h1 img { width: min(100%, 420px); }
   .hero-lead { margin-bottom: 0; }
   .hero-copy h2 {
     font-size: 5.6vw;
