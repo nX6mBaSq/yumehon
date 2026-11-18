@@ -117,7 +117,7 @@ const screens = {
     return page("この夢を見たいと思った人に分析",`<p class="meta">対象　${link("dream/"+id,esc(dream.title))}</p>
       <div id="gate" class="panel"><p>15秒ほどの広告のあとに、分析が表示されます。</p><p class="meta">広告を見るかどうかは選べます。夢の本文は広告なしで読めます。</p>
       ${actions(`<button type="button" class="primary" data-ad-start="${id}">広告を見て分析を開く</button>`,link("dream/"+id,"夢に戻る"))}</div>
-      <p class="meta">分析は無料です。広告の収益でこの本屋さんを運営しています。${link("ads","広告について")}</p>`);
+      <p class="meta">分析は無料です。広告の収益でこの本屋さんを運営しています。</p>`);
   },
   myanalysis: () => analysisPage(myDream, null, "自分の夢のため、広告なしで表示しています。"),
   external: id => page(id==="advertiser"?"広告主サイトへの遷移":"外部の通販サイトへの遷移",note(id==="advertiser"?"リワード広告から広告主のサイトへ移動する位置の確認用です。広告は広告ネットワークが配信します。":"アフィリエイトリンクの配置確認用です。リンク先は提携先の商品ページを設定します。")+`<p>${link("browse","夢の本棚へ")}</p>`),
@@ -142,13 +142,14 @@ const screens = {
   help: () => page("ご利用案内",
     section("夢を記録する","<p>ログインして日記を作成します。公開／非公開と、分析ボタンを付けるかどうかを日記ごとに選べます。</p>")+
     section("夢を読む","<p>夢の本棚で、公開された日記を無料で読めます。</p>")+
-    section("夢の分析と広告",'<ul class="list"><li>夢の詳細ページの「この夢を見たいと思った人に分析」を押すと、15秒ほどの広告のあとに分析が表示されます。</li><li>一度開いた分析は、24時間は広告なしで見返せます。</li><li>広告を見られる回数には上限があり、上限を超えると広告なしで表示されます。</li><li>分析はエンターテインメントであり、医療的な診断ではありません。</li></ul>'+`<p>${link("ads","広告・アフィリエイトについて")}</p>`)+
+    section("夢の分析と広告",'<ul class="list"><li>夢の詳細ページの「この夢を見たいと思った人に分析」を押すと、15秒ほどの広告のあとに分析が表示されます。</li><li>一度開いた分析は、24時間は広告なしで見返せます。</li><li>広告を見られる回数には上限があり、上限を超えると広告なしで表示されます。</li><li>分析はエンターテインメントであり、医療的な診断ではありません。</li></ul>')+
     button("contact","お問い合わせ")),
-  ads: () => page("広告・アフィリエイトについて",
-    section("分析前の広告","<p>分析を開く前に表示する動画広告は、広告ネットワーク（Google AdSense など）が配信するリワード広告です。広告を見るかどうかは読者が選べます。</p>")+
-    section("おすすめのアイテム","<p>分析の中で紹介する商品リンクはアフィリエイト広告です。「広告」「PR」と表示しています。リンク先で購入などがあると、運営が提携先から報酬を受け取ります。</p>")+
-    section("表記の方針","<p>健康や睡眠の効果をうたう表現は使いません。</p>")+
-    `<p>広告の配信と計測のしくみ（Cookie などの利用）は${link("privacy","プライバシーポリシー")}をご覧ください。</p>`),
+  // 「広告・アフィリエイトについて」ページは一旦非表示（戻すときは各行頭の // を外す）
+  // ads: () => page("広告・アフィリエイトについて",
+  //   section("分析前の広告","<p>分析を開く前に表示する動画広告は、広告ネットワーク（Google AdSense など）が配信するリワード広告です。広告を見るかどうかは読者が選べます。</p>")+
+  //   section("おすすめのアイテム","<p>分析の中で紹介する商品リンクはアフィリエイト広告です。「広告」「PR」と表示しています。リンク先で購入などがあると、運営が提携先から報酬を受け取ります。</p>")+
+  //   section("表記の方針","<p>健康や睡眠の効果をうたう表現は使いません。</p>")+
+  //   `<p>広告の配信と計測のしくみ（Cookie などの利用）は${link("privacy","プライバシーポリシー")}をご覧ください。</p>`),
   contact: () => page("お問い合わせ",form("contact",field("返信先メールアドレス",input("email","","email"))+field("お問い合わせ内容",area("body"))+actions(submit("送信する"),link("help","ご利用案内へ")))),
   contacted: () => page("お問い合わせの送信完了",button("help","ご利用案内へ")),
   terms: () => page("利用規約",note("利用規約本文の掲載欄（公開した夢に分析ボタンと広告が表示されることを含む）")),
@@ -197,7 +198,7 @@ screens.admin = id => {
 };
 
 const screenGroups = [
-  ["公開・共通",[["home","トップ"],["browse","公開夢日記一覧"],["dream/0","公開日記詳細（分析あり）"],["dream/3","公開日記詳細（分析なし）"],["analysis/0","夢分析ページ（広告→分析）"],["external/advertiser","広告主サイトへの遷移"],["external/item","通販サイトへの遷移"],["report/0","通報フォーム"],["reported","通報完了"],["help","ご利用案内"],["ads","広告・アフィリエイトについて"],["contact","お問い合わせ"],["contacted","お問い合わせ完了"],["terms","利用規約"],["privacy","プライバシーポリシー"]]],
+  ["公開・共通",[["home","トップ"],["browse","公開夢日記一覧"],["dream/0","公開日記詳細（分析あり）"],["dream/3","公開日記詳細（分析なし）"],["analysis/0","夢分析ページ（広告→分析）"],["external/advertiser","広告主サイトへの遷移"],["external/item","通販サイトへの遷移"],["report/0","通報フォーム"],["reported","通報完了"],["help","ご利用案内"],["contact","お問い合わせ"],["contacted","お問い合わせ完了"],["terms","利用規約"],["privacy","プライバシーポリシー"]]],
   ["会員・日記",[["login","ログイン"],["register","会員登録"],["me","マイページ"],["diaries","自分の夢日記一覧"],["new","日記の新規作成"],["mine","自分の日記詳細"],["edit","日記編集"],["myanalysis","自分の夢の分析（広告なし）"],["settings","アカウント設定"]]],
   ["運営権限",[["admin","運営管理"],...Object.entries(adminPages).map(([key,title])=>["admin/"+key,title])]]
 ];
@@ -227,7 +228,7 @@ function render() {
   document.body.classList.toggle("is-top", isHome);
   document.querySelector(".preview").hidden = name !== "map" && new URLSearchParams(location.search).get("preview") !== "1";
   $("header").innerHTML = window.dreamHome.header(navigation);
-  $("footer").innerHTML = `<div class="bar">${window.dreamHome.brand()}<nav aria-label="フッター">${link("help","ご利用案内")}${link("contact","お問い合わせ")}${link("ads","広告・アフィリエイトについて")}${link("terms","利用規約")}${link("privacy","プライバシーポリシー")}</nav><p class="copyright"><small>&copy; 2026 不思議な夢の本屋さん</small></p></div>`;
+  $("footer").innerHTML = `<div class="bar">${window.dreamHome.brand()}<nav aria-label="フッター">${link("help","ご利用案内")}${link("contact","お問い合わせ")}${link("terms","利用規約")}${link("privacy","プライバシーポリシー")}</nav><p class="copyright"><small>&copy; 2026 不思議な夢の本屋さん</small></p></div>`;
   $("screen").innerHTML = Object.hasOwn(screens,name) ? screens[name](id) : unavailable("画面が見つかりません","画面一覧から選択してください。");
   const heading = $("screen").querySelector("h1");
   document.title = isHome ? "不思議な夢の本屋さん" : heading.textContent + "｜不思議な夢の本屋さん";
