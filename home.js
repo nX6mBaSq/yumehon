@@ -77,28 +77,30 @@
           </div>
         </section>
 
-        <section class="home-section home-dreams" aria-labelledby="home-dreams-title">
-          ${heading("home-dreams-title", "届いた夢")}
-          <div class="dream-books">${entries().slice(0, 3).map(({ dream, index }) => dreamCard(dream, index)).join("")}</div>
-          ${cta("browse", "もっと夢を読む")}
-        </section>
+        <div class="home-collections">
+          <section class="home-section home-dreams" aria-labelledby="home-dreams-title">
+            ${heading("home-dreams-title", "届いた夢")}
+            <div class="dream-books">${entries().slice(0, 3).map(({ dream, index }) => dreamCard(dream, index)).join("")}</div>
+            ${cta("browse", "もっと夢を読む")}
+          </section>
 
-        <section class="home-section home-categories" aria-labelledby="home-categories-title">
-          ${heading("home-categories-title", "夢のカテゴリ")}
-          <ul class="category-windows">
-            ${categories.map((label, index) => {
-              const artwork = categoryArtwork[index];
-              const crop = framedCategoryArtwork.includes(artwork) ? ' class="category-art-crop"' : "";
-              return `
-              <li><a href="#browse/${index}">
-                <div class="category-picture">
-                  <img${crop} src="assets/${artwork}.webp" width="334" height="190" loading="lazy" alt="">
-                </div>
-                <span>${label}</span>
-              </a></li>`;
-            }).join("")}
-          </ul>
-        </section>
+          <section class="home-section home-categories" aria-labelledby="home-categories-title">
+            ${heading("home-categories-title", "夢のカテゴリ")}
+            <ul class="category-windows">
+              ${categories.map((label, index) => {
+                const artwork = categoryArtwork[index];
+                const crop = framedCategoryArtwork.includes(artwork) ? ' class="category-art-crop"' : "";
+                return `
+                <li><a href="#browse/${index}">
+                  <div class="category-picture">
+                    <img${crop} src="assets/${artwork}.webp" width="334" height="190" loading="lazy" alt="">
+                  </div>
+                  <span>${label}</span>
+                </a></li>`;
+              }).join("")}
+            </ul>
+          </section>
+        </div>
 
         <section class="home-ending" aria-labelledby="home-ending-title">
           <div class="ending-copy">

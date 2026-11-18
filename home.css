@@ -21,6 +21,49 @@
 .home-night-sky {
   position: relative;
   isolation: isolate;
+  --vine-left: url("assets/wisteria-edge-left.webp");
+  --vine-right: url("assets/wisteria-edge-right.webp");
+  --clematis-left: url("assets/clematis-edge-left.webp");
+  --bellflower-right: url("assets/bellflower-edge-right.webp");
+  --vine-width: clamp(38px, 12.6vw, 66px);
+  --vine-small: calc(var(--vine-width) * .76);
+}
+.home-hero, .home-collections { position: relative; }
+.home-hero::after, .home-collections::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: .97;
+  background-repeat: no-repeat;
+}
+.home-hero::after {
+  bottom: 0;
+  height: 13rem;
+  background-image: var(--vine-left), var(--vine-right);
+  background-position: left top, right 2rem;
+  background-size: var(--vine-width) auto;
+  mask-image: linear-gradient(black 75%, transparent);
+}
+.home-collections::after {
+  inset-block: 0;
+  background-image: var(--clematis-left), var(--bellflower-right),
+    var(--vine-left), var(--vine-right),
+    var(--clematis-left), var(--bellflower-right),
+    var(--vine-left), var(--bellflower-right);
+  background-position: left 6%, right 14%, left 29%, right 39%,
+    left 54%, right 64%, left 77%, right 87%;
+  background-size: var(--vine-width) auto, var(--vine-small) auto,
+    var(--vine-small) auto, var(--vine-width) auto,
+    var(--vine-width) auto, var(--vine-width) auto,
+    var(--vine-small) auto, var(--vine-small) auto;
+  mask-image: linear-gradient(black 83%, transparent);
+}
+@media (min-width: 900px) {
+  .home-night-sky {
+    --vine-width: clamp(66px, 8vw, 124px);
+  }
 }
 .night-sky-art {
   position: absolute;
