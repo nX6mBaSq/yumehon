@@ -21,16 +21,36 @@
 .home-night-sky {
   position: relative;
   isolation: isolate;
-  padding-bottom: clamp(1.5rem, 7vw, 2.75rem);
 }
-.home-night-sky::before {
-  content: "";
+.night-sky-art {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: url("assets/bookstore-night-sky-glow-v2.webp") center / 100% 100% no-repeat;
-  mask-image: linear-gradient(black 91%, transparent);
+  mask-image: linear-gradient(black calc(100% - 12rem), transparent);
+}
+.night-sky-art span {
+  position: absolute;
+  inset-inline: 0;
+  height: 42%;
+  background: url("assets/bookstore-night-sky-glow-v4.webp") center / cover no-repeat;
+}
+/* Overlap the tiles so the stars retain their proportions on long mobile pages. */
+.night-sky-art span:first-child {
+  top: 0;
+  z-index: 2;
+  mask-image: linear-gradient(black 69%, transparent);
+}
+.night-sky-art span:nth-child(2) {
+  top: 29%;
+  z-index: 1;
+  transform: scaleX(-1);
+  mask-image: linear-gradient(black 69%, transparent);
+}
+.night-sky-art span:last-child { bottom: 0; }
+@media (min-width: 900px) {
+  .night-sky-art span:first-child { height: 100%; mask-image: none; }
+  .night-sky-art span ~ span { display: none; }
 }
 .home-view #header, .home-view #footer { background: transparent; border: 0; }
 .is-top #header {
@@ -412,7 +432,8 @@
   isolation: isolate;
   display: grid;
   text-align: center;
-  background: linear-gradient(transparent 70%, var(--night-edge));
+  padding-top: clamp(1.5rem, 7vw, 2.75rem);
+  background: linear-gradient(transparent 65%, var(--night-edge));
 }
 .ending-copy, .ending-art { grid-area: 1 / 1; }
 .ending-copy {
@@ -454,7 +475,7 @@
   transform: rotate(-12deg);
 }
 .ending-art {
-  --ending-fade: linear-gradient(transparent, black 14%, black 83%, transparent);
+  --ending-fade: linear-gradient(transparent, black 24%, black 74%, transparent);
   z-index: -1;
   display: block;
   width: min(100%, 840px);
@@ -559,7 +580,7 @@
   .home-hero {
     position: relative;
     isolation: isolate;
-    background: linear-gradient(#0b1025 0 48%, #0b1025d9 62%, #13192d66 84%, transparent);
+    background: linear-gradient(#0b1025 30%, #0b1025ed 49%, #0b10258c 73%, transparent);
   }
   .hero-art {
     display: block;
@@ -571,7 +592,7 @@
   .hero-art::after {
     aspect-ratio: 780 / 1020;
     background-image: url("assets/window-mobile.webp");
-    mask-image: linear-gradient(black 86%, transparent);
+    mask-image: linear-gradient(black 67%, transparent);
   }
   .hero-copy {
     width: 100%;

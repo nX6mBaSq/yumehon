@@ -48,6 +48,7 @@
   function renderHome() {
     return `
       <div class="home-night-sky">
+        <div class="night-sky-art" aria-hidden="true"><span></span><span></span><span></span></div>
         <section class="home-hero" aria-labelledby="home-title">
           <div class="hero-art" aria-hidden="true"></div>
           <div class="hero-copy">
@@ -98,19 +99,19 @@
             }).join("")}
           </ul>
         </section>
-      </div>
 
-      <section class="home-ending" aria-labelledby="home-ending-title">
-        <div class="ending-copy">
-          ${heading("home-ending-title", "作家のみなさんへ")}
-          <p>今夜も、どうかたくさん眠ってください。<br>
-            あなたが眠りの中で出会う、不思議な世界。<br>
-            その物語を、楽しみに待っている読者がいます。<br>
-            眠ることも、あなたのお仕事なのですから。</p>
-          <p class="goodnight">おやすみなさい。<span class="goodnight-moon" aria-hidden="true"></span></p>
-        </div>
-        <img class="ending-art" src="assets/goodnight-sky.webp" width="1224" height="1285" loading="lazy" decoding="async" alt="紫の花に囲まれたテラスで、本の上に眠る白い猫。雲の向こうに街とお城の灯りが見える。">
-      </section>`;
+        <section class="home-ending" aria-labelledby="home-ending-title">
+          <div class="ending-copy">
+            ${heading("home-ending-title", "作家のみなさんへ")}
+            <p>今夜も、どうかたくさん眠ってください。<br>
+              あなたが眠りの中で出会う、不思議な世界。<br>
+              その物語を、楽しみに待っている読者がいます。<br>
+              眠ることも、あなたのお仕事なのですから。</p>
+            <p class="goodnight">おやすみなさい。<span class="goodnight-moon" aria-hidden="true"></span></p>
+          </div>
+          <img class="ending-art" src="assets/goodnight-sky.webp" width="1224" height="1285" loading="lazy" decoding="async" alt="紫の花に囲まれたテラスで、本の上に眠る白い猫。雲の向こうに街とお城の灯りが見える。">
+        </section>
+      </div>`;
   }
 
   function homeBrand() {
