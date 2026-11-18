@@ -1,6 +1,7 @@
 .home-view {
   --night: #0d1222;
   --night-edge: #080c1b;
+  --text-backdrop: #080c1bb3;
   --gold: #f9dfa6;
   --bronze: #c19a5b;
   --ink-brown: #342418;
@@ -29,25 +30,26 @@
   --vine-small: calc(var(--vine-width) * .76);
 }
 .home-hero, .home-collections { position: relative; }
-.home-hero::after, .home-collections::after {
+.home-hero::before, .home-hero::after, .home-collections::after {
   content: "";
   position: absolute;
-  inset-inline: 0;
   z-index: 5;
   pointer-events: none;
   opacity: .97;
   background-repeat: no-repeat;
 }
-.home-hero::after {
+.home-hero::before, .home-hero::after {
   bottom: 0;
+  width: var(--vine-width);
   height: 13rem;
-  background-image: var(--vine-left), var(--vine-right);
-  background-position: left top, right 2rem;
-  background-size: var(--vine-width) auto;
+  background-image: var(--vine-left);
+  background-size: 100% auto;
   mask-image: linear-gradient(black 75%, transparent);
 }
+.home-hero::before { left: 0; }
+.home-hero::after { right: 0; transform: scaleX(-1); }
 .home-collections::after {
-  inset-block: 0;
+  inset: 0;
   background-image: var(--clematis-left), var(--bellflower-right),
     var(--vine-left), var(--vine-right),
     var(--clematis-left), var(--bellflower-right),
@@ -76,7 +78,8 @@
   position: absolute;
   inset-inline: 0;
   height: 42%;
-  background: url("assets/bookstore-night-sky-glow-v4.webp") center / cover no-repeat;
+  background: linear-gradient(#03061124, #03061124),
+    url("assets/bookstore-night-sky-glow-v4.webp") center / cover no-repeat;
 }
 /* Overlap the tiles so the stars retain their proportions on long mobile pages. */
 .night-sky-art span:first-child {
@@ -198,6 +201,29 @@
   color: var(--gold);
   text-shadow: 0 2px 6px #050719, 0 0 20px #eac5832a;
 }
+.hero-lead, .hero-copy h2, .home-about-copy, .ending-copy {
+  position: relative;
+  isolation: isolate;
+}
+.hero-lead::before, .hero-copy h2::before,
+.home-about-copy::before, .ending-copy::before {
+  content: "";
+  position: absolute;
+  inset: -1rem;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--text-backdrop);
+  mask-image: linear-gradient(transparent, black 1rem, black calc(100% - 1rem), transparent),
+    linear-gradient(90deg, transparent, black 1rem, black calc(100% - 1rem), transparent);
+  mask-composite: intersect;
+}
+.ending-copy::before { inset-inline: 0; }
+.home-night-sky .ornate-heading span {
+  background: var(--text-backdrop);
+  box-shadow: 0 0 .7rem .35rem var(--text-backdrop);
+  border-radius: .3rem;
+}
+.home-ending .ornate-heading span { background: none; box-shadow: none; }
 .hero-copy h1 {
   margin: 0 auto .65rem;
 }
@@ -352,7 +378,7 @@
 }
 .dream-page h3 { font: 700 1.38em/1.3 var(--serif); margin: 0 0 .2em; }
 .dream-page p { margin: 0 0 .5em; }
-.dream-page .dream-author { color: #795434; font-size: .91em; margin-bottom: .35em; }
+.dream-page .dream-author { color: #53361f; font-size: .91em; margin-bottom: .35em; }
 .dream-detail {
   display: flex;
   align-items: center;
