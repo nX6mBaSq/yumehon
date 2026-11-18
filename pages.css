@@ -13,7 +13,17 @@
   --link: #f3cf8f;
   font-family: var(--serif);
 }
-.home-view a { color: inherit; }
+/* 注意：.home-view a { color: inherit } は置かない。
+   詳細度でトップの CTA（.home-cta / .home-cta-gold）の文字色を上書きしてしまうため。
+   リンクの基本色は style.css の a { color: inherit } で足りる。 */
+
+/* ヘッダーとメニュー：展開したメニューが本文（羊皮紙・本型カードなど
+   position / filter を持つ要素）の下に潜らないよう、ヘッダーを最前面に置く */
+.home-view #header { position: relative; z-index: 20; }
+.is-top #header { position: absolute; }
+.is-top:has(.preview:not([hidden])) #header { position: relative; }
+.home-menu nav { z-index: 1; max-height: calc(100dvh - 80px); overflow-y: auto; }
+.home-brand { min-height: 44px; }
 
 /* 届いた夢カード：分析ありの印 */
 .dream-page .dream-mark { margin: 0 0 .5rem; }

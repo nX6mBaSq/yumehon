@@ -112,6 +112,18 @@
     </div>`;
   }
 
+  // メニュー：外側をタップ／Esc キーで閉じる（モバイルで開きっぱなしにならないように）
+  document.addEventListener("click", event => {
+    const menu = document.querySelector(".home-menu[open]");
+    if (menu && !menu.contains(event.target)) menu.open = false;
+  });
+  document.addEventListener("keydown", event => {
+    const menu = document.querySelector(".home-menu[open]");
+    if (event.key !== "Escape" || !menu) return;
+    menu.open = false;
+    menu.querySelector("summary").focus();
+  });
+
   window.dreamHome = {
     render: renderHome,
     header: renderHomeHeader,
