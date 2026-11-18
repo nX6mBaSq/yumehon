@@ -64,19 +64,6 @@
         <p class="home-text-link"><a href="#about">この本屋さんについて <span aria-hidden="true">›</span></a></p>
       </section>
 
-      <section class="home-section home-analysis" aria-labelledby="home-analysis-title">
-        ${heading("home-analysis-title", "この夢、見てみたい？")}
-        <p class="home-analysis-lead">気になった夢は、短い広告のあとに<br>「この夢を見たい人向けの分析」を<br>無料で読めます。</p>
-        <div class="analysis-sample">
-          <p class="sample-label">分析の見本</p>
-          <p class="sample-title">月の森で出会った白い少年</p>
-          ${tags(["月明かり", "森", "星"])}
-          <h3>寝る前に試せること</h3>
-          <p>月明かりの森を思い浮かべながら目を閉じる</p>
-        </div>
-        ${cta("help", "くわしく")}
-      </section>
-
       <section class="home-section home-dreams" aria-labelledby="home-dreams-title">
         ${heading("home-dreams-title", "届いた夢")}
         <div class="dream-books">${entries().slice(0, 3).map(({ dream, index }) => dreamCard(dream, index)).join("")}</div>
