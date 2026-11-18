@@ -116,16 +116,16 @@
       </div>`;
   }
 
-  function homeBrand() {
+  function homeBrand(showIcon = true) {
     return `<a class="home-brand" href="#home">
-        ${book}
+        ${showIcon ? book : ""}
         <span>不思議な夢の本屋さん</span>
       </a>`;
   }
 
   function renderHomeHeader(navigation) {
     return `<div class="home-bar">
-      ${homeBrand()}
+      ${homeBrand(false)}
       <details class="home-menu">
         <summary><span class="menu-icon" aria-hidden="true"></span>メニュー</summary>
         <nav aria-label="メイン">${navigation}</nav>
