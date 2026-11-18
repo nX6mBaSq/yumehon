@@ -186,13 +186,31 @@
 .home-cta:hover, .dream-book a:hover { filter: brightness(1.1); }
 
 .home-about {
-  width: min(100%, 780px);
+  width: min(92%, 780px);
 }
-.home-about img {
+.home-about-art {
   display: block;
   width: 100%;
   height: auto;
 }
+.home-about-copy {
+  width: min(92%, 36em);
+  margin: clamp(1.25rem, 4vw, 2.25rem) auto 0;
+  text-align: center;
+  text-shadow: 0 2px 6px #080c1b;
+  font: 500 clamp(.9375rem, 3.85vw, 1.125rem)/1.95 var(--serif);
+}
+.home-about-copy h3 {
+  margin: 0 0 1.2rem;
+  color: var(--gold);
+  font-size: clamp(1.25rem, 5.15vw, 1.85rem);
+  line-height: 1.45;
+  letter-spacing: .04em;
+  word-break: keep-all;
+  text-wrap: balance;
+}
+.home-about-copy p { margin: 0; word-break: keep-all; text-wrap: balance; }
+.home-about-copy p + p { margin-top: 1em; }
 .home-announcement {
   width: min(89%, 680px);
   padding: 1.35rem 1rem;
@@ -291,7 +309,6 @@
 
 @media (max-width: 599px) {
   .home-about {
-    width: 86%;
     padding-block: 40px 24px;
   }
   .dream-books { width: 100%; }

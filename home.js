@@ -65,8 +65,16 @@
 
         <section class="home-about" aria-labelledby="home-about-title">
           ${heading("home-about-title", "この本屋さんについて")}
-          <img src="assets/bookstore-welcome.png" width="1199" height="1312" loading="lazy" decoding="async"
-            alt="不思議な夢の本屋さんへようこそ。いらっしゃいませ。当店は、眠りの中で本当に見た、不思議な夢の物語だけを集めた小さな本屋です。この本屋には、夢に呼ばれた人だけがたどり着けるのだとか。さあ、今日はどんな夢の世界に出会えるのでしょうか。">      </section>
+          <img class="home-about-art" src="assets/bookstore-welcome-art.png" width="1448" height="1086"
+            loading="lazy" decoding="async" alt="">
+          <div class="home-about-copy">
+            <h3>不思議な夢の本屋さんへ<wbr>ようこそ</h3>
+            <p>いらっしゃいませ。</p>
+            <p>当店は、眠りの中で本当に見た、<wbr>不思議な夢の物語だけを集めた<wbr>小さな本屋です。</p>
+            <p>この本屋には、<wbr>夢に呼ばれた人だけが<wbr>たどり着けるのだとか。</p>
+            <p>さあ、<wbr>今日はどんな夢の世界に<wbr>出会えるのでしょうか。</p>
+          </div>
+        </section>
 
         <section class="home-section home-dreams" aria-labelledby="home-dreams-title">
           ${heading("home-dreams-title", "届いた夢")}
