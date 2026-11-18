@@ -1,168 +1,386 @@
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* ==========================================================
+   V4 追加分：トップの新セクション ＋ 下層ページのテーマ
+   トップ（home.css）の夜空・金・羊皮紙のトーンを全画面に広げる。
+   基準は 390px 幅のモバイル表示。
+   ========================================================== */
+
+.home-view {
+  --text: #f4e8d0;
+  --muted-text: #c9b9a0;
+  --panel: #151c31;
+  --panel-deep: #11182c;
+  --line-bronze: #bb8d5180;
+  --link: #f3cf8f;
+  font-family: var(--serif);
+}
+.home-view a { color: inherit; }
+
+/* ---------- トップ：このお店は、どんな場所？ ---------- */
+.home-about-note {
+  margin: 1.25rem auto .25rem;
+  font: 500 .875rem/1.85 var(--serif);
+  text-align: center;
+  color: var(--muted-text);
+}
+.home-text-link { margin: 0; text-align: center; }
+.home-text-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  min-height: 44px;
+  color: var(--link);
+  font: 700 .9375rem/1.4 var(--serif);
+  text-underline-offset: .3em;
 }
 
-main { flex: 1; }
-main:focus { outline: none; }
+/* ---------- トップ：この夢、見てみたい？ ---------- */
+.home-analysis { padding-top: clamp(38px, 9.6vw, 74px); text-align: center; }
+.home-analysis-lead {
+  margin: 0 0 1.25rem;
+  font: 500 clamp(.875rem, 3.75vw, 1.125rem)/1.9 var(--serif);
+}
+.analysis-sample {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+  padding: 1.5rem 1.25rem 1.25rem;
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink-brown);
+  text-align: left;
+  box-shadow: 0 8px 18px #0204099c, inset 0 0 0 1px #fff3d880;
+  outline: 1px solid #8d653c;
+  outline-offset: -7px;
+}
+.analysis-sample .sample-label {
+  position: absolute;
+  top: -.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: .1rem 1rem;
+  border: 1px solid var(--bronze);
+  border-radius: 99px;
+  background: var(--night);
+  color: var(--gold);
+  font-size: .75rem;
+  letter-spacing: .12em;
+  white-space: nowrap;
+}
+.analysis-sample .sample-title {
+  margin: 0 0 .6rem;
+  font: 700 1.0625rem/1.4 var(--serif);
+  text-align: center;
+}
+.analysis-sample .tags { justify-content: center; margin-bottom: .9rem; }
+.analysis-sample h3 {
+  margin: 0 0 .2rem;
+  padding-top: .75rem;
+  border-top: 1px solid #8d653c55;
+  font: 700 .875rem/1.5 var(--serif);
+  color: #795434;
+}
+.analysis-sample p:last-child { margin: 0; font-size: .9375rem; line-height: 1.7; }
+.home-analysis .home-cta { margin-bottom: .5rem; }
 
-.footer-links { align-items: center; flex-wrap: wrap; justify-content: center; }
-.footer button {
-  padding: 6px 10px;
-  border: 1px solid #9b805b;
+/* 届いた夢カード：分析ありの印 */
+.dream-page .dream-mark { margin: 0 0 .5rem; }
+.dream-mark span {
+  display: inline-block;
+  padding: 0 .6em;
+  border: 1px solid #8d653c;
+  border-radius: 99px;
+  color: #6a4528;
+  font-size: .75rem;
+  line-height: 1.7;
+}
+
+/* ==========================================================
+   下層ページ
+   ========================================================== */
+.home-view:not(.is-top) #header {
+  position: relative;
+  background: linear-gradient(var(--night-edge), #0d1222e6);
+  border-bottom: 1px solid #bb8d5140;
+}
+.home-view:not(.is-top) #screen {
+  max-width: 1120px;
+  padding: 1.75rem 16px 3.5rem;
+  color: var(--text);
+  font: 400 .9375rem/1.85 var(--serif);
+}
+.home-view .narrow { max-width: 680px; }
+.home-view #screen .book-ornament { margin-bottom: .4rem; }
+.home-view #screen .book-ornament .book-symbol { width: 30px; }
+
+.page-title {
+  margin: 0 0 1.25rem;
+  color: var(--gold);
+  text-align: center;
+  font: 700 clamp(1.5rem, 6.6vw, 2.4rem)/1.4 var(--serif);
+  letter-spacing: .04em;
+  text-shadow: 0 2px 6px #050719, 0 0 20px #eac5832a;
+  text-wrap: balance;
+  word-break: auto-phrase;
+}
+.page-lead {
+  margin: -.75rem 0 1.25rem;
+  text-align: center;
+  color: var(--muted-text);
+  font-size: .875rem;
+}
+
+/* 見出し */
+.home-view:not(.is-top) #screen section { margin: 2rem 0; }
+.home-view:not(.is-top) #screen section > h2 {
+  display: flex;
+  align-items: center;
+  gap: .6em;
+  margin: 0 0 .85rem;
+  color: var(--gold);
+  font: 700 1.1875rem/1.45 var(--serif);
+}
+.home-view:not(.is-top) #screen section > h2::before {
+  content: "❧";
+  color: var(--bronze);
+  font-size: .8em;
+}
+.home-view:not(.is-top) #screen section > h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #bb8d51, transparent);
+}
+
+/* テキスト */
+.home-view #screen p { margin: 0 0 .85rem; }
+.home-view #screen a:not([class]) {
+  color: var(--link);
+  text-underline-offset: .28em;
+}
+.home-view .meta, .home-view small { color: var(--muted-text); }
+.home-view .meta { font-size: .8125rem; line-height: 1.75; }
+.home-view .list { padding-left: 1.2rem; }
+.home-view .list li { margin-bottom: .5rem; }
+.home-view .list li::marker { color: var(--bronze); }
+
+/* パネル・お知らせ */
+.home-view .panel, .home-view .notice, .home-view .card {
+  border: 1px solid var(--line-bronze);
+  border-radius: 10px;
+  background: linear-gradient(160deg, #1b2440, var(--panel) 70%);
+  color: var(--text);
+  box-shadow: 0 6px 16px #0204098a;
+}
+.home-view .panel { padding: 1.25rem 1.1rem; }
+.home-view .notice {
+  padding: .9rem 1rem;
+  border-left: 3px solid var(--bronze);
+  background: #171e32;
+  font-size: .875rem;
+}
+
+/* 夢の本文：羊皮紙のページ */
+.home-view .panel.story {
+  position: relative;
+  margin: 0 0 1.5rem;
+  padding: 1.75rem 1.4rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink-brown);
+  font: 500 1rem/2 var(--serif);
+  outline: 1px solid #8d653c;
+  outline-offset: -8px;
+  box-shadow: 0 8px 18px #0204099c;
+}
+
+/* 分析への案内 */
+.home-view .analysis-cta {
+  text-align: center;
+  border-color: var(--bronze);
+  background:
+    radial-gradient(circle at 18% 22%, #f5d49e60 0 1px, transparent 1.6px) 0 0 / 61px 47px,
+    linear-gradient(160deg, #222c4a, var(--panel) 75%);
+}
+.home-view .analysis-cta h2 {
+  margin: 0;
+  color: var(--gold);
+  font: 700 1.25rem/1.4 var(--serif);
+}
+.home-view .analysis-cta p { margin: 0; }
+
+/* ボタン：トップの CTA と同じ丸型 */
+.home-view #screen .button,
+.home-view #screen button {
+  display: inline-grid;
+  place-items: center;
+  min-height: 48px;
+  padding: .55em 1.6em;
+  border: 1px solid var(--bronze);
+  border-radius: 100px;
+  background: linear-gradient(145deg, #27314a, #131b30 65%);
+  box-shadow: inset 0 0 0 2px #080e20b0, 0 0 20px #bd8a4620;
+  color: #ffe7b9;
+  font: 700 .9375rem/1.45 "Yu Gothic UI", Meiryo, sans-serif;
+  text-decoration: none;
+}
+.home-view #screen .primary {
+  background: var(--paper);
+  border-color: #f0c682;
+  box-shadow: 0 0 22px #bd8a464a;
+  color: #302013;
+}
+.home-view #screen .button:hover,
+.home-view #screen button:not(:disabled):hover { filter: brightness(1.12); }
+.home-view #screen button:disabled { opacity: .4; filter: grayscale(.4); }
+
+.home-view .actions {
+  display: grid;
+  gap: .75rem;
+  margin-top: 1.25rem;
+}
+.home-view .actions > .button,
+.home-view .actions > button { width: 100%; }
+.home-view .actions > a:not(.button) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  color: var(--link);
+}
+.home-view .narrow > p > .button { width: 100%; }
+
+/* タグ・バッジ */
+.home-view .tag {
+  border: 1px solid var(--line-bronze);
+  border-radius: 99px;
+  padding: .1rem .75rem;
+  background: #1a2238;
+  color: var(--gold);
+  font-size: .8125rem;
+}
+.analysis-sample .tag {
+  border-color: #8d653c;
+  background: #fff4dc80;
+  color: var(--ink-brown);
+}
+.home-view .badge, .home-view .mark {
+  border: 1px solid var(--bronze);
   border-radius: 4px;
   background: transparent;
   color: var(--gold);
-  font: inherit;
-  cursor: pointer;
+  font-family: "Yu Gothic UI", Meiryo, sans-serif;
 }
 
-.shelf-empty { margin: 28px 0; color: var(--cream); }
-.thumbnail-placeholder {
-  display: grid;
-  place-items: center;
-  background: radial-gradient(ellipse at 70% 20%, #563f65, var(--night));
+/* フォーム */
+.home-view form { gap: 1.15rem; }
+.home-view .field > span, .home-view legend {
   color: var(--gold);
-  border: 1px solid #8c6c58;
+  font-weight: 700;
+  font-size: .875rem;
 }
-.thumbnail-placeholder svg { width: 42%; }
-
-.inner-page {
-  background: radial-gradient(ellipse at top, #fff8ed, var(--paper));
-  overflow-wrap: anywhere;
+.home-view .field :is(input, select, textarea) {
+  border: 1px solid #bb8d518c;
+  border-radius: 8px;
+  padding: .6rem .75rem;
+  background: var(--panel-deep);
+  color: var(--text);
+  font: 400 1rem/1.6 "Yu Gothic UI", Meiryo, sans-serif;
 }
-
-.page-heading {
-  position: relative;
-  isolation: isolate;
-  padding: 43px 0 46px;
-  text-align: center;
-  color: var(--cream);
-  border-bottom: 1px solid #a57e4e;
-  background: linear-gradient(90deg, #161423f5, #211a31eb, #161423f5),
-    url("assets/bookshop.jpg") center 45% / cover;
+.home-view .field :is(input, select, textarea):focus {
+  border-color: var(--gold);
+  outline: 2px solid #f9dfa655;
+  outline-offset: 1px;
 }
-.page-heading::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 10px;
-  border: 1px solid #e7c99255;
+.home-view select option { background: var(--panel-deep); color: var(--text); }
+.home-view fieldset {
+  border: 1px solid var(--line-bronze);
+  border-radius: 10px;
+  padding: .75rem 1rem 1rem;
 }
-.page-heading svg { width: 30px; height: 30px; color: var(--gold); }
-.page-heading h1 {
-  font-size: clamp(29px, 4.1vw, 51px);
-  line-height: 1.35;
-  letter-spacing: .07em;
-}
-.page-content { max-width: 800px; padding-block: 32px 58px; }
-.page-content:has(.catalog) { max-width: 1184px; }
-.page-content h2 { font-size: clamp(20px, 2.5vw, 28px); letter-spacing: .045em; }
-.page-content p + p { margin-top: 10px; }
-.page-content ul:not(.book-grid) { padding-left: 1.4em; }
-.page-content li + li:not(.book-grid li) { margin-top: 5px; }
-.page-content a:not(.btn,.book) { color: #593e68; }
-.card {
-  min-width: 0;
-  margin-bottom: 16px;
-  padding: clamp(16px, 3vw, 28px);
-  border: 1px solid #c5aa88;
-  border-radius: 6px;
-  background: #fff9ee;
-  box-shadow: 0 5px 15px #39263a0c;
-}
-.card h2 { margin-bottom: 12px; }
-.card > .btn { margin-top: 12px; }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
-.grid .card { margin: 0; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-block: 16px; }
-.stack { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.page-content .btn, .page-content button {
+.home-view legend { padding: 0 .4rem; }
+.home-view fieldset label, .home-view form > label:not(.field) {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 8px 16px;
-  border: 1px solid #8b6b91;
-  border-radius: 4px;
-  background: #fff9ee;
-  color: #3b2a48;
-  font: 700 14px/1.5 var(--serif);
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-.page-content .primary { color: #fff2dc; background: #3b2a48; }
-.page-content .btn:hover, .page-content button:hover { background: #eee1ed; }
-.page-content .primary:hover { background: #513660; }
-.back { margin-bottom: 14px; }
-.back a { display: inline-flex; align-items: center; min-height: 44px; }
-.notice {
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  border: 1px solid #c8b4cd;
-  border-left: 3px solid #745780;
-  border-radius: 4px;
-  background: #f0e6f1;
-  color: #47364f;
-}
-.tag {
-  display: inline-block;
-  color: #63446c;
-  background: #ede2ed;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 3px;
-  padding: 2px 8px;
-  margin-bottom: 7px;
-}
-.page-content form { display: grid; gap: 14px; }
-.page-content .card form { margin-top: 16px; }
-.page-content label { display: block; font-weight: 700; }
-.page-content :is(input:not([type=checkbox]), select, textarea) {
-  display: block;
-  width: 100%;
+  gap: .45rem;
   min-height: 44px;
-  margin-top: 5px;
-  padding: 8px 10px;
-  border: 1px solid #9f889b;
-  border-radius: 4px;
-  background: #fffdf7;
-  color: var(--ink);
-  font: inherit;
+  line-height: 1.6;
 }
-.page-content textarea { resize: vertical; }
-.page-content .check { display: flex; align-items: center; min-height: 44px; gap: 10px; }
-.check input { accent-color: #513660; width: 18px; height: 18px; flex: none; margin: 0; }
-.page-content form button { justify-self: start; }
-:is(button, input, select, textarea):focus-visible { outline: 2px solid #a77641; outline-offset: 3px; }
-.catalog .book-grid { margin: 22px 0 0; }
-.catalog .book { background: #fff9ee; box-shadow: 0 6px 15px #39263a13; }
-.catalog .book:hover { background: #fffdf7; border-color: #846445; }
-.shelf-filter { max-width: 280px; }
-.catalog .notice { margin-top: 22px; }
-.dream-preview {
-  display: grid;
-  grid-template-columns: clamp(100px, 24vw, 220px) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(14px, 4vw, 28px);
+.home-view input[type="radio"], .home-view input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+  accent-color: #e9c27f;
 }
-.dream-preview h2 { margin-bottom: 5px; }
-.reading-page { padding: clamp(24px, 5vw, 52px); }
-.read { white-space: pre-wrap; }
-.reading-page .read { font: 500 clamp(16px, 2.3vw, 20px)/2.2 var(--serif); }
-.meta { color: var(--muted); font-size: 13px; }
+.home-view output { color: var(--gold); font-size: .875rem; }
+.home-view .filter { max-width: 100%; margin: 0 0 1.5rem; }
 
-@media (max-width: 760px) {
-  .page-heading { padding: 28px 0 31px; }
-  .page-heading svg { width: 24px; height: 24px; }
-  .page-content { padding-block: 22px 38px; }
-  .catalog .book-grid { margin-inline: auto; }
-  .catalog .shelf-filter { width: min(100%, 470px); max-width: none; margin-inline: auto; }
+/* 夢の本棚・似た夢 */
+.shelf { max-width: 1120px; margin: auto; }
+.home-view:not(.is-top) .dream-books { width: 100%; margin-bottom: 0; }
+
+/* 自分の夢日記 */
+.home-view .diary-list { gap: .9rem; }
+.home-view .diary-list .card { padding: 1rem 1.1rem; text-decoration: none; }
+.home-view .diary-list .card h2 { margin: 0 0 .2rem; color: var(--gold); font: 700 1.0625rem/1.45 var(--serif); }
+.home-view .card:hover { background: linear-gradient(160deg, #232e50, #18203a 70%); color: var(--text); }
+
+/* おすすめのアイテム（PR） */
+.home-view .item { grid-template-columns: 72px minmax(0, 1fr); padding: .85rem; text-decoration: none; }
+.home-view .item h3 { margin: .25rem 0 0; color: var(--text); font-size: .9375rem; line-height: 1.5; }
+
+/* 画像の差し替え枠 */
+.home-view .placeholder {
+  border: 1px dashed #bb8d5180;
+  border-radius: 8px;
+  background: repeating-linear-gradient(135deg, #182038, #182038 9px, #1c2541 9px, #1c2541 10px);
+  color: var(--muted-text);
+  font-size: .75rem;
+  line-height: 1.5;
 }
 
-@media (max-width: 460px) {
-  .grid { grid-template-columns: 1fr; }
-  .page-content .actions > * { flex: 1 1 auto; }
+/* 広告の枠 */
+.home-view .ad-player {
+  border: 1px dashed var(--bronze);
+  border-radius: 12px;
+  padding: 1rem;
+  background: #0b1020;
+  text-align: center;
+}
+.home-view .ad-player > p { margin: 0; font-size: .875rem; }
+.home-view .ad-player .placeholder { width: min(100%, 220px); font-size: .875rem; }
+.home-view .ad-player .actions { margin-top: .25rem; }
+.home-view .countdown { color: var(--gold); font-size: 1.25rem; font-family: Georgia, serif; }
+
+/* 注意書き */
+.home-view .disclaimer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-bronze);
+  color: var(--muted-text);
+  font-size: .8125rem;
+}
+
+/* 表（運営：計測） */
+.home-view table { font-size: .875rem; }
+.home-view th, .home-view td { border: 1px solid var(--line-bronze); padding: .6rem .7rem; }
+.home-view th { background: #1d2643; color: var(--gold); }
+.home-view td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* 画面一覧 */
+.home-view .screen-list li::marker { color: var(--bronze); }
+
+/* 確認用メニュー（表示時のみ） */
+.home-view .preview { font-family: "Yu Gothic UI", Meiryo, sans-serif; }
+
+@media (min-width: 600px) {
+  .home-view .actions { display: flex; flex-wrap: wrap; justify-content: center; }
+  .home-view .actions > .button,
+  .home-view .actions > button { width: auto; min-width: 220px; }
+  .home-view .narrow > p > .button { width: auto; min-width: 320px; }
+  .home-view .filter { max-width: 360px; margin-inline: auto; }
+}
+@media (min-width: 920px) {
+  .home-view:not(.is-top) #screen { padding: 2.75rem 1.25rem 4.5rem; }
 }
