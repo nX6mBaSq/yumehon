@@ -25,18 +25,6 @@
 .home-menu nav { z-index: 1; max-height: calc(100dvh - 80px); overflow-y: auto; }
 .home-brand { min-height: 44px; }
 
-/* 届いた夢カード：分析ありの印 */
-.dream-page .dream-mark { margin: 0 0 .5rem; }
-.dream-mark span {
-  display: inline-block;
-  padding: 0 .6em;
-  border: 1px solid #8d653c;
-  border-radius: 99px;
-  color: #6a4528;
-  font-size: .75rem;
-  line-height: 1.7;
-}
-
 /* ==========================================================
    下層ページ
    ========================================================== */

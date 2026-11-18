@@ -39,7 +39,6 @@
           <h3>${esc(dream.title)}</h3>
           <p class="dream-author">投稿者　${esc(dream.author)}</p>
           <p>${esc(excerptFor(dream, index))}</p>
-          ${dream.analysis ? '<p class="dream-mark"><span>分析あり</span></p>' : ""}
           <span class="dream-detail">詳細を読む <span aria-hidden="true">›</span></span>
         </div>
       </a>

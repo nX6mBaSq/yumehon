@@ -250,7 +250,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 7.5% 8.5% 8.5%;
+  padding: 7.5% 8.5% 8%;
   text-decoration: none;
 }
 .dream-illustration {
@@ -307,7 +307,7 @@
   .dream-book {
     background-image: url("assets/dream-book-frame-mobile.webp");
   }
-  .dream-book a { padding: 9% 10% 10%; }
+  .dream-book a { padding: 9% 10% 9%; }
   .dream-illustration {
     aspect-ratio: 2 / 1;
     margin-inline: 8px;
